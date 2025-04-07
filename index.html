@@ -14,11 +14,12 @@
 
         body {
             background: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             padding: 20px;
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .search-container {
@@ -26,10 +27,14 @@
             border-radius: 30px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             padding: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-row {
             display: flex;
             align-items: center;
-            max-width: 800px;
-            width: 100%;
+            gap: 15px;
+            padding: 10px 20px;
         }
 
         .engine-selector {
@@ -76,7 +81,6 @@
 
         .search-input {
             flex: 1;
-            margin: 0 15px;
             padding: 12px 20px;
             border: none;
             border-radius: 25px;
@@ -99,18 +103,15 @@
         .magnifier-icon {
             width: 20px;
             height: 20px;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTU3LjIgNTguOGwtMTUuNS0xNS41Yy0yLjkgMi45LTcuNSAyLjktMTAuNCAwYy0yLjktMi45LTIuOS03LjUgMC0xMC40bDE1LjUtMTUuNWMxLjQtMS40IDMuNC0yLjIgNS43LTIuMmM0LjIgMCA3LjggMy42IDcuOCA3LjhDMzIuOCA1My4zIDQzLjkgNTUuNCA1Ny4yIDU4Ljh6bTAtMjEuOGMtMy43IDAtNi44IDMuMS02LjggNi44YzAgMy43IDMuMSA2LjggNi44IDYuOHM2LjgtMy4xIDYuOC02LjhTNjAuOSAzNyA1Ny4yIDM3eiIvPjwvc3ZnPg==');
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTU3LjIgNTguOGwtMTUuNS0xNS41Yy0yLjkgMi45LTcuNSAyLjktMTAuNCAwYy0yLjktMi45LTIuOS03LjUgMC0xMC40bDE1LjUtMTUuNWMxLjQtMS40IDMuNC0yLjIgNS43LTIuMmM0LjIgMCA3LjggMy42IDcuOCA3LjhDMzIuOCA1My4zIDQzLjkgNTUuNCA1Ny4yIDU4Ljh6bTAtMjEuOGMtMy43IDAtNi44IDMuMS02LjggNi44YzAgMy43IDMuMSA2LjggNi44IDYuOC0wLTMuNy0zLjEtNi44LTYuOC02LjhTNjAuOSAzNyA1Ny4yIDM3eiIvPjwvc3ZnPg==');
             background-size: cover;
         }
 
         .navigator {
-            margin-top: 30px;
             background: rgba(255,255,255,0.9);
             border-radius: 20px;
             backdrop-filter: blur(10px);
             padding: 20px;
-            max-width: 800px;
-            width: 100%;
         }
 
         .navigator-grid {
@@ -143,61 +144,65 @@
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <div class="engine-selector" id="engineSelector">
-            <div class="engine-icon" id="currentEngineIcon" style="background-image: url('https://www.bing.com/favicon.ico')"></div>
-            <span>必应</span>
-            <div class="engine-list" id="engineList">
-                <div class="engine-item" data-engine="bing" data-icon="https://www.bing.com/favicon.ico">必应</div>
-                <div class="engine-item" data-engine="baidu" data-icon="https://www.baidu.com/favicon.ico">百度</div>
-                <div class="engine-item" data-engine="google" data-icon="https://www.google.com/favicon.ico">谷歌</div>
-                <div class="engine-item" data-engine="so360" data-icon="https://www.so.com/favicon.ico">360</div>
-                <div class="engine-item" data-engine="zhihu" data-icon="https://www.zhihu.com/favicon.ico">知乎</div>
-                <div class="engine-item" data-engine="sogou" data-icon="https://www.sogou.com/favicon.ico">搜狗</div>
-                <div class="engine-item" data-engine="toutiao" data-icon="https://www.toutiao.com/favicon.ico">头条</div>
+    <div class="main-container">
+        <div class="search-container">
+            <div class="search-row">
+                <div class="engine-selector" id="engineSelector">
+                    <div class="engine-icon" id="currentEngineIcon" style="background-image: url('https://www.bing.com/favicon.ico')" data-engine="bing"></div>
+                    <span>必应</span>
+                    <div class="engine-list" id="engineList">
+                        <div class="engine-item" data-engine="bing" data-icon="https://www.bing.com/favicon.ico">必应</div>
+                        <div class="engine-item" data-engine="baidu" data-icon="https://www.baidu.com/favicon.ico">百度</div>
+                        <div class="engine-item" data-engine="google" data-icon="https://www.google.com/favicon.ico">谷歌</div>
+                        <div class="engine-item" data-engine="so360" data-icon="https://www.so.com/favicon.ico">360</div>
+                        <div class="engine-item" data-engine="zhihu" data-icon="https://www.zhihu.com/favicon.ico">知乎</div>
+                        <div class="engine-item" data-engine="sogou" data-icon="https://www.sogou.com/favicon.ico">搜狗</div>
+                        <div class="engine-item" data-engine="toutiao" data-icon="https://www.toutiao.com/favicon.ico">头条</div>
+                    </div>
+                </div>
+                <input type="text" class="search-input" placeholder="输入搜索内容">
+                <button class="search-button">
+                    <div class="magnifier-icon"></div>
+                    搜索
+                </button>
             </div>
         </div>
-        <input type="text" class="search-input" placeholder="输入搜索内容">
-        <button class="search-button">
-            <div class="magnifier-icon"></div>
-            搜索
-        </button>
-    </div>
 
-    <div class="navigator">
-        <div class="navigator-grid">
-            <div>
-                <div class="nav-category">视频</div>
-                <a href="#" class="nav-link">
-                    <div class="link-box">优酷</div>
-                    优酷视频
-                </a>
-                <a href="#" class="nav-link">
-                    <div class="link-box">腾讯视频</div>
-                    腾讯视频
-                </a>
-            </div>
-            <div>
-                <div class="nav-category">编程</div>
-                <a href="#" class="nav-link">
-                    <div class="link-box">GitHub</div>
-                    GitHub
-                </a>
-                <a href="#" class="nav-link">
-                    <div class="link-box">Stack Overflow</div>
-                    Stack Overflow
-                </a>
-            </div>
-            <div>
-                <div class="nav-category">学习</div>
-                <a href="#" class="nav-link">
-                    <div class="link-box">Coursera</div>
-                    Coursera
-                </a>
-                <a href="#" class="nav-link">
-                    <div class="link-box">中国大学MOOC</div>
-                    中国大学MOOC
-                </a>
+        <div class="navigator">
+            <div class="navigator-grid">
+                <div>
+                    <div class="nav-category">视频</div>
+                    <a href="#" class="nav-link">
+                        <div class="link-box">优酷</div>
+                        优酷视频
+                    </a>
+                    <a href="#" class="nav-link">
+                        <div class="link-box">腾讯视频</div>
+                        腾讯视频
+                    </a>
+                </div>
+                <div>
+                    <div class="nav-category">编程</div>
+                    <a href="#" class="nav-link">
+                        <div class="link-box">GitHub</div>
+                        GitHub
+                    </a>
+                    <a href="#" class="nav-link">
+                        <div class="link-box">Stack Overflow</div>
+                        Stack Overflow
+                    </a>
+                </div>
+                <div>
+                    <div class="nav-category">学习</div>
+                    <a href="#" class="nav-link">
+                        <div class="link-box">Coursera</div>
+                        Coursera
+                    </a>
+                    <a href="#" class="nav-link">
+                        <div class="link-box">中国大学MOOC</div>
+                        中国大学MOOC
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -214,7 +219,9 @@
         document.querySelectorAll('.engine-item').forEach(item => {
             item.addEventListener('click', () => {
                 const selectedIcon = item.dataset.icon;
+                const selectedEngine = item.dataset.engine;
                 currentEngineIcon.style.backgroundImage = `url(${selectedIcon})`;
+                currentEngineIcon.dataset.engine = selectedEngine;
                 engineList.style.display = 'none';
             });
         });
@@ -222,6 +229,45 @@
         document.addEventListener('click', (e) => {
             if (!engineSelector.contains(e.target) && !engineList.contains(e.target)) {
                 engineList.style.display = 'none';
+            }
+        });
+
+        // 搜索功能实现
+        document.querySelector('.search-button').addEventListener('click', () => {
+            const searchText = document.querySelector('.search-input').value.trim();
+            const selectedEngine = currentEngineIcon.dataset.engine || 'bing';
+            let searchUrl = '';
+
+            switch(selectedEngine) {
+                case 'baidu':
+                    searchUrl = `https://www.baidu.com/s?wd=${encodeURIComponent(searchText)}`;
+                    break;
+                case 'google':
+                    searchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchText)}`;
+                    break;
+                case 'so360':
+                    searchUrl = `https://www.so.com/s?q=${encodeURIComponent(searchText)}`;
+                    break;
+                case 'zhihu':
+                    searchUrl = `https://www.zhihu.com/search?type=content&q=${encodeURIComponent(searchText)}`;
+                    break;
+                case 'sogou':
+                    searchUrl = `https://www.sogou.com/web?query=${encodeURIComponent(searchText)}`;
+                    break;
+                case 'toutiao':
+                    searchUrl = `https://www.toutiao.com/search/?keyword=${encodeURIComponent(searchText)}`;
+                    break;
+                default:
+                    searchUrl = `https://www.bing.com/search?q=${encodeURIComponent(searchText)}`;
+            }
+
+            if (searchText) window.open(searchUrl, '_blank');
+        });
+
+        // 回车触发搜索
+        document.querySelector('.search-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-button').click();
             }
         });
     </script>
