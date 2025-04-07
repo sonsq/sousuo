@@ -33,8 +33,7 @@
             width: 12%;
             min-width: 60px;
             border-radius: 30px 0 0 30px;
-            overflow: visible;
-            z-index: 100;
+            z-index: 200;
         }
 
         .engine-btn {
@@ -63,6 +62,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             padding: 15px;
+            z-index: 300;
         }
 
         .engine-list.show {
@@ -344,6 +344,19 @@
                 });
             });
         });
+
+        // 动态调整下拉菜单宽度
+        function adjustEngineListWidth() {
+            const searchContainer = document.querySelector('.search-container');
+            const engineList = document.querySelector('.engine-list');
+            if (searchContainer && engineList) {
+                engineList.style.width = searchContainer.offsetWidth + 'px';
+            }
+        }
+
+        // 初始化执行
+        adjustEngineListWidth();
+        window.addEventListener('resize', adjustEngineListWidth);
     </script>
 </body>
 </html>
