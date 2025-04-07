@@ -3,272 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多功能搜索引擎</title>
+    <title>极简搜索导航</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
+        body {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            padding: 40px;
             font-family: 'Segoe UI', sans-serif;
         }
 
-        body {
-            background: #f0f2f5;
-            padding: 20px;
-        }
-
-        .main-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
+        /* 搜索框容器 */
         .search-container {
-            background: white;
+            display: flex;
+            max-width: 800px;
+            width: 90%;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
             border-radius: 30px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            padding: 10px;
-            margin-bottom: 30px;
-        }
-
-        .search-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 10px 20px;
-        }
-
-        .engine-selector {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 15px;
-            border-radius: 25px;
-            background: #f8f9fa;
-            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: relative;
         }
 
-        .engine-icon {
-            width: 24px;
-            height: 24px;
-            background-size: cover;
-            border-radius: 4px;
+        /* 搜索引擎选择 */
+        .engine-select {
+            position: relative;
+            width: 120px;
+            border-radius: 30px 0 0 30px;
+            z-index: 200;
+        }
+
+        .engine-btn {
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
         }
 
         .engine-list {
             position: absolute;
-            top: 40px;
+            top: calc(100% + 5px);
             left: 0;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 5px;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             display: none;
+            padding: 10px;
+            z-index: 300;
         }
 
-        .engine-item {
-            padding: 8px 15px;
+        .engine-list.show {
+            display: block;
+        }
+
+        .engine-option {
+            padding: 12px;
+            cursor: pointer;
             border-radius: 8px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 10px;
-            cursor: pointer;
+            color: #333;
         }
 
-        .engine-item:hover {
-            background: #f8f9fa;
+        .engine-option:hover {
+            background: rgba(0, 0, 0, 0.05);
         }
 
+        /* 搜索输入框 */
         .search-input {
             flex: 1;
-            padding: 12px 20px;
+            padding: 15px;
             border: none;
-            border-radius: 25px;
-            background: #f8f9fa;
             font-size: 16px;
+            background: transparent;
+            color: #333;
         }
 
-        .search-button {
-            padding: 12px 25px;
+        /* 搜索按钮 */
+        .search-btn {
+            width: 80px;
+            padding: 15px 0;
             border: none;
-            border-radius: 25px;
-            background: #1a73e8;
-            color: white;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 0 30px 30px 0;
             cursor: pointer;
+            color: #333;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
         }
 
-        .magnifier-icon {
-            width: 20px;
-            height: 20px;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTU3LjIgNTguOGwtMTUuNS0xNS41Yy0yLjkgMi45LTcuNSAyLjktMTAuNCAwYy0yLjktMi45LTIuOS03LjUgMC0xMC40bDE1LjUtMTUuNWMxLjQtMS40IDMuNC0yLjIgNS43LTIuMmM0LjIgMCA3LjggMy42IDcuOCA3LjhDMzIuOCA1My4zIDQzLjkgNTUuNCA1Ny4yIDU4Ljh6bTAtMjEuOGMtMy43IDAtNi44IDMuMS02LjggNi44YzAgMy43IDMuMSA2LjggNi44IDYuOC0wLTMuNy0zLjEtNi44LTYuOC02LjhTNjAuOSAzNyA1Ny4yIDM3eiIvPjwvc3ZnPg==');
-            background-size: cover;
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
         }
 
-        .navigator {
-            background: rgba(255,255,255,0.9);
+        /* 导航模块 */
+        .nav-container {
+            max-width: 800px;
+            width: 90%;
+            margin: 30px auto 0;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            backdrop-filter: blur(10px);
             padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .navigator-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        .nav-categories {
+            display: flex;
             gap: 15px;
+            margin-bottom: 20px;
         }
 
         .nav-category {
-            font-weight: 500;
-            margin-bottom: 10px;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.2s;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .nav-link {
-            text-decoration: none;
-            color: #333;
+        .nav-category.active,
+        .nav-category:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-items {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 15px;
+            animation: fadeIn 0.3s;
+        }
+
+        .nav-items.active {
+            display: grid;
+        }
+
+        .nav-item {
             text-align: center;
+            color: white;
+            text-decoration: none;
         }
 
-        .link-box {
-            width: 100%;
-            height: 80px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 5px;
+        .nav-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            margin: 0 auto 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .engine-select {
+                width: 80px;
+            }
+            
+            .engine-list {
+                width: 160px;
+            }
+            
+            .nav-categories {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="search-container">
-            <div class="search-row">
-                <div class="engine-selector" id="engineSelector">
-                    <div class="engine-icon" id="currentEngineIcon" style="background-image: url('https://www.bing.com/favicon.ico')" data-engine="bing"></div>
+    <!-- 搜索框 -->
+    <div class="search-container">
+        <div class="engine-select">
+            <button class="engine-btn"><i class="fab fa-windows"></i></button>
+            <div class="engine-list">
+                <div class="engine-option" data-engine="bing">
+                    <i class="fab fa-windows"></i>
                     <span>必应</span>
-                    <div class="engine-list" id="engineList">
-                        <div class="engine-item" data-engine="bing" data-icon="https://www.bing.com/favicon.ico">必应</div>
-                        <div class="engine-item" data-engine="baidu" data-icon="https://www.baidu.com/favicon.ico">百度</div>
-                        <div class="engine-item" data-engine="google" data-icon="https://www.google.com/favicon.ico">谷歌</div>
-                        <div class="engine-item" data-engine="so360" data-icon="https://www.so.com/favicon.ico">360</div>
-                        <div class="engine-item" data-engine="zhihu" data-icon="https://www.zhihu.com/favicon.ico">知乎</div>
-                        <div class="engine-item" data-engine="sogou" data-icon="https://www.sogou.com/favicon.ico">搜狗</div>
-                        <div class="engine-item" data-engine="toutiao" data-icon="https://www.toutiao.com/favicon.ico">头条</div>
-                    </div>
                 </div>
-                <input type="text" class="search-input" placeholder="输入搜索内容">
-                <button class="search-button">
-                    <div class="magnifier-icon"></div>
-                    搜索
-                </button>
+                <div class="engine-option" data-engine="google">
+                    <i class="fab fa-google"></i>
+                    <span>谷歌</span>
+                </div>
+                <div class="engine-option" data-engine="baidu">
+                    <i class="fab fa-baidu"></i>
+                    <span>百度</span>
+                </div>
+                <div class="engine-option" data-engine="zhihu">
+                    <i class="fab fa-zhihu"></i>
+                    <span>知乎</span>
+                </div>
+                <div class="engine-option" data-engine="sogou">
+                    <i class="fas fa-search"></i>
+                    <span>搜狗</span>
+                </div>
+                <div class="engine-option" data-engine="toutiao">
+                    <i class="fas fa-newspaper"></i>
+                    <span>头条</span>
+                </div>
             </div>
         </div>
+        <input type="text" class="search-input" placeholder="输入搜索内容...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+    </div>
 
-        <div class="navigator">
-            <div class="navigator-grid">
-                <div>
-                    <div class="nav-category">视频</div>
-                    <a href="#" class="nav-link">
-                        <div class="link-box">优酷</div>
-                        优酷视频
-                    </a>
-                    <a href="#" class="nav-link">
-                        <div class="link-box">腾讯视频</div>
-                        腾讯视频
-                    </a>
-                </div>
-                <div>
-                    <div class="nav-category">编程</div>
-                    <a href="#" class="nav-link">
-                        <div class="link-box">GitHub</div>
-                        GitHub
-                    </a>
-                    <a href="#" class="nav-link">
-                        <div class="link-box">Stack Overflow</div>
-                        Stack Overflow
-                    </a>
-                </div>
-                <div>
-                    <div class="nav-category">学习</div>
-                    <a href="#" class="nav-link">
-                        <div class="link-box">Coursera</div>
-                        Coursera
-                    </a>
-                    <a href="#" class="nav-link">
-                        <div class="link-box">中国大学MOOC</div>
-                        中国大学MOOC
-                    </a>
-                </div>
-            </div>
+    <!-- 导航模块 -->
+    <div class="nav-container">
+        <div class="nav-categories">
+            <div class="nav-category active" data-category="video">视频</div>
+            <div class="nav-category" data-category="code">编程</div>
+            <div class="nav-category" data-category="social">社交</div>
+        </div>
+        <div class="nav-items active" data-category="video">
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">哔哩哔哩</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">YouTube</div>
+            </a>
+        </div>
+        <div class="nav-items" data-category="code">
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">GitHub</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">VS Code</div>
+            </a>
+        </div>
+        <div class="nav-items" data-category="social">
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">微博</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">Twitter</div>
+            </a>
         </div>
     </div>
 
     <script>
-        const engineSelector = document.getElementById('engineSelector');
-        const engineList = document.getElementById('engineList');
-        const currentEngineIcon = document.getElementById('currentEngineIcon');
+        // 搜索引擎配置
+        const engines = {
+            bing: { icon: 'fab fa-windows', url: 'https://www.bing.com/search?q=' },
+            google: { icon: 'fab fa-google', url: 'https://www.google.com/search?q=' },
+            baidu: { icon: 'fab fa-baidu', url: 'https://www.baidu.com/s?wd=' },
+            zhihu: { icon: 'fab fa-zhihu', url: 'https://www.zhihu.com/search?q=' },
+            sogou: { icon: 'fas fa-search', url: 'https://www.sogou.com/web?query=' },
+            toutiao: { icon: 'fas fa-newspaper', url: 'https://www.toutiao.com/search?keyword=' }
+        };
 
-        engineSelector.addEventListener('click', () => {
-            engineList.style.display = engineList.style.display === 'block' ? 'none' : 'block';
-        });
+        let currentEngine = 'bing';
 
-        document.querySelectorAll('.engine-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const selectedIcon = item.dataset.icon;
-                const selectedEngine = item.dataset.engine;
-                currentEngineIcon.style.backgroundImage = `url(${selectedIcon})`;
-                currentEngineIcon.dataset.engine = selectedEngine;
-                engineList.style.display = 'none';
+        // 引擎选择功能
+        document.querySelectorAll('.engine-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const engine = option.dataset.engine;
+                currentEngine = engine;
+                const iconClass = engines[engine].icon;
+                document.querySelector('.engine-btn').innerHTML = 
+                    `<i class="${iconClass}"></i>`;
+                closeEngineList();
             });
         });
 
-        document.addEventListener('click', (e) => {
-            if (!engineSelector.contains(e.target) && !engineList.contains(e.target)) {
-                engineList.style.display = 'none';
-            }
+        // 显示/隐藏引擎列表
+        document.querySelector('.engine-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelector('.engine-list').classList.toggle('show');
         });
 
-        // 搜索功能实现
-        document.querySelector('.search-button').addEventListener('click', () => {
-            const searchText = document.querySelector('.search-input').value.trim();
-            const selectedEngine = currentEngineIcon.dataset.engine || 'bing';
-            let searchUrl = '';
+        // 点击空白处关闭
+        document.addEventListener('click', closeEngineList);
+        function closeEngineList() {
+            document.querySelector('.engine-list').classList.remove('show');
+        }
 
-            switch(selectedEngine) {
-                case 'baidu':
-                    searchUrl = `https://www.baidu.com/s?wd=${encodeURIComponent(searchText)}`;
-                    break;
-                case 'google':
-                    searchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchText)}`;
-                    break;
-                case 'so360':
-                    searchUrl = `https://www.so.com/s?q=${encodeURIComponent(searchText)}`;
-                    break;
-                case 'zhihu':
-                    searchUrl = `https://www.zhihu.com/search?type=content&q=${encodeURIComponent(searchText)}`;
-                    break;
-                case 'sogou':
-                    searchUrl = `https://www.sogou.com/web?query=${encodeURIComponent(searchText)}`;
-                    break;
-                case 'toutiao':
-                    searchUrl = `https://www.toutiao.com/search/?keyword=${encodeURIComponent(searchText)}`;
-                    break;
-                default:
-                    searchUrl = `https://www.bing.com/search?q=${encodeURIComponent(searchText)}`;
-            }
-
-            if (searchText) window.open(searchUrl, '_blank');
+        // 搜索功能
+        document.querySelector('.search-btn').addEventListener('click', search);
+        document.querySelector('.search-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') search();
         });
 
-        // 回车触发搜索
-        document.querySelector('.search-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                document.querySelector('.search-button').click();
-            }
+        function search() {
+            const query = document.querySelector('.search-input').value;
+            window.open(engines[currentEngine].url + encodeURIComponent(query));
+        }
+
+        // 导航分类切换
+        document.querySelectorAll('.nav-category').forEach(category => {
+            category.addEventListener('click', () => {
+                document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+                
+                const targetCategory = category.dataset.category;
+                document.querySelectorAll('.nav-items').forEach(item => {
+                    item.classList.remove('active');
+                    if(item.dataset.category === targetCategory) {
+                        item.classList.add('active');
+                    }
+                });
+            });
         });
     </script>
 </body>
