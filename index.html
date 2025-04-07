@@ -10,7 +10,7 @@
             background: linear-gradient(45deg, #667eea, #764ba2);
             min-height: 100vh;
             margin: 0;
-            padding: 40px;
+            padding: 20px;
             font-family: 'Segoe UI', sans-serif;
         }
 
@@ -21,7 +21,6 @@
             width: 90%;
             margin: 0 auto 30px;
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
             border-radius: 30px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -109,42 +108,57 @@
             background: rgba(255, 255, 255, 0.9);
         }
 
-        /* 导航模块 */
-        .nav-container {
+        /* 导航分类栏 */
+        .nav-tabs {
             max-width: 800px;
             width: 90%;
             margin: 30px auto 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-categories {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .nav-category {
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 20px;
-            transition: all 0.2s;
-            color: white;
             background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            position: relative;
         }
 
-        .nav-category.active,
-        .nav-category:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .tab-buttons {
+            display: flex;
+            position: relative;
+        }
+
+        .tab-slider {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 12px 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .tab-button.active {
+            color: white;
+        }
+
+        /* 导航内容区 */
+        .nav-content {
+            max-width: 800px;
+            width: 90%;
+            margin: 15px auto 0;
         }
 
         .nav-items {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 20px;
             animation: fadeIn 0.3s;
         }
 
@@ -178,7 +192,7 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 20px;
+                padding: 15px;
             }
             
             .search-container {
@@ -193,8 +207,13 @@
                 width: 160px;
             }
             
-            .nav-categories {
-                flex-wrap: wrap;
+            .tab-button {
+                font-size: 13px;
+                padding: 10px 0;
+            }
+            
+            .nav-items {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             }
         }
     </style>
@@ -235,13 +254,18 @@
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- 导航模块 -->
-    <div class="nav-container">
-        <div class="nav-categories">
-            <div class="nav-category active" data-category="video">视频</div>
-            <div class="nav-category" data-category="code">编程</div>
-            <div class="nav-category" data-category="social">社交</div>
+    <!-- 导航分类栏 -->
+    <div class="nav-tabs">
+        <div class="tab-buttons">
+            <div class="tab-slider"></div>
+            <div class="tab-button active" data-category="video">视频</div>
+            <div class="tab-button" data-category="code">编程</div>
+            <div class="tab-button" data-category="social">社交</div>
         </div>
+    </div>
+
+    <!-- 导航内容区 -->
+    <div class="nav-content">
         <div class="nav-items active" data-category="video">
             <a href="#" class="nav-item">
                 <div class="nav-icon"></div>
@@ -251,25 +275,37 @@
                 <div class="nav-icon"></div>
                 <div class="nav-text">YouTube</div>
             </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">优酷</div>
+            </a>
         </div>
         <div class="nav-items" data-category="code">
-            <a href="#" class="nav-item">
+            <a href="https://github.com" class="nav-item">
                 <div class="nav-icon"></div>
                 <div class="nav-text">GitHub</div>
             </a>
-            <a href="#" class="nav-item">
+            <a href="https://stackoverflow.com" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">Stack Overflow</div>
+            </a>
+            <a href="https://vscode.dev" class="nav-item">
                 <div class="nav-icon"></div>
                 <div class="nav-text">VS Code</div>
             </a>
         </div>
         <div class="nav-items" data-category="social">
-            <a href="#" class="nav-item">
+            <a href="https://weibo.com" class="nav-item">
                 <div class="nav-icon"></div>
                 <div class="nav-text">微博</div>
             </a>
-            <a href="#" class="nav-item">
+            <a href="https://twitter.com" class="nav-item">
                 <div class="nav-icon"></div>
                 <div class="nav-text">Twitter</div>
+            </a>
+            <a href="https://zhihu.com" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">知乎</div>
             </a>
         </div>
     </div>
@@ -322,21 +358,42 @@
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
 
-        // 导航分类切换
-        document.querySelectorAll('.nav-category').forEach(category => {
-            category.addEventListener('click', () => {
-                document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
-                category.classList.add('active');
+        // 导航滑动功能
+        function initTabSlider() {
+            const tabs = document.querySelector('.tab-buttons');
+            const slider = document.querySelector('.tab-slider');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            function updateSlider(target) {
+                const index = Array.from(buttons).indexOf(target);
+                const buttonWidth = target.offsetWidth;
+                const buttonLeft = target.offsetLeft;
                 
-                const targetCategory = category.dataset.category;
-                document.querySelectorAll('.nav-items').forEach(item => {
-                    item.classList.remove('active');
-                    if(item.dataset.category === targetCategory) {
-                        item.classList.add('active');
-                    }
+                slider.style.width = `${buttonWidth}px`;
+                slider.style.left = `${buttonLeft}px`;
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    updateSlider(this);
+                    
+                    const category = this.dataset.category;
+                    document.querySelectorAll('.nav-items').forEach(item => {
+                        item.classList.remove('active');
+                        if(item.dataset.category === category) {
+                            item.classList.add('active');
+                        }
+                    });
                 });
             });
-        });
+
+            updateSlider(document.querySelector('.tab-button.active'));
+        }
+
+        window.addEventListener('resize', initTabSlider);
+        initTabSlider();
     </script>
 </body>
 </html>
