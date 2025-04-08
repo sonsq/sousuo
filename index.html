@@ -34,7 +34,7 @@
             z-index: 200;
         }
 
-        .engine-btn, .category-btn {
+        .engine-btn {
             width: 100%;
             height: 100%;
             padding: 15px;
@@ -47,7 +47,7 @@
             color: #333;
         }
 
-        .dropdown-list {
+        .engine-list {
             position: absolute;
             top: calc(100% + 5px);
             left: 0;
@@ -60,11 +60,11 @@
             z-index: 300;
         }
 
-        .dropdown-list.show {
+        .engine-list.show {
             display: block;
         }
 
-        .dropdown-option {
+        .engine-option {
             padding: 12px;
             cursor: pointer;
             border-radius: 8px;
@@ -75,7 +75,7 @@
             color: #333;
         }
 
-        .dropdown-option:hover {
+        .engine-option:hover {
             background: rgba(0, 0, 0, 0.05);
         }
 
@@ -108,30 +108,60 @@
             background: rgba(255, 255, 255, 0.9);
         }
 
-        /* 分类选择 */
-        .category-select {
-            width: 120px;
+        /* 导航容器 */
+        .nav-wrapper {
+            max-width: 800px;
+            width: 90%;
+            margin: 30px auto 0;
             display: flex;
-            /* width: 90%; */
-            margin: 0 auto 15px;
+            gap: 20px;
+        }
+
+        /* 导航分类栏 */
+        .nav-tabs {
+            width: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 8px;
             position: relative;
         }
 
-        .category-btn {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 30px;
-            justify-content: space-between;
-            padding: 15px 25px;
+        .tab-buttons {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .tab-slider {
+            position: absolute;
+            left: 0;
+            width: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button {
+            padding: 12px 10px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 14px;
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+
+        .tab-button.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* 导航内容区 */
         .nav-content {
-            max-width: 800px;
-            width: 90%;
-            margin: 0 auto;
+            flex: 1;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 20px;
         }
 
@@ -175,17 +205,30 @@
                 padding: 15px;
             }
             
-            .search-container, .category-select {
-                width: 100%;
+            .nav-wrapper {
+                flex-direction: column;
+                gap: 15px;
             }
             
-            .engine-select {
-                width: 80px;
+            .nav-tabs {
+                width: 100%;
+                padding: 10px;
             }
             
-            .dropdown-list {
-                width: 100%;
-                left: 0 !important;
+            .tab-buttons {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .tab-slider {
+                display: none;
+            }
+            
+            .tab-button {
+                flex: 1;
+                padding: 8px;
+                font-size: 13px;
+                margin: 2px;
             }
             
             .nav-items {
@@ -199,28 +242,28 @@
     <div class="search-container">
         <div class="engine-select">
             <button class="engine-btn"><i class="fab fa-windows"></i></button>
-            <div class="dropdown-list">
-                <div class="dropdown-option" data-engine="bing">
+            <div class="engine-list">
+                <div class="engine-option" data-engine="bing">
                     <i class="fab fa-windows"></i>
                     <span>必应</span>
                 </div>
-                <div class="dropdown-option" data-engine="google">
+                <div class="engine-option" data-engine="google">
                     <i class="fab fa-google"></i>
                     <span>谷歌</span>
                 </div>
-                <div class="dropdown-option" data-engine="baidu">
+                <div class="engine-option" data-engine="baidu">
                     <i class="fab fa-baidu"></i>
                     <span>百度</span>
                 </div>
-                <div class="dropdown-option" data-engine="zhihu">
+                <div class="engine-option" data-engine="zhihu">
                     <i class="fab fa-zhihu"></i>
                     <span>知乎</span>
                 </div>
-                <div class="dropdown-option" data-engine="sogou">
+                <div class="engine-option" data-engine="sogou">
                     <i class="fas fa-search"></i>
                     <span>搜狗</span>
                 </div>
-                <div class="dropdown-option" data-engine="toutiao">
+                <div class="engine-option" data-engine="toutiao">
                     <i class="fas fa-newspaper"></i>
                     <span>头条</span>
                 </div>
@@ -230,62 +273,62 @@
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- 分类选择 -->
-    <div class="category-select">
-        <button class="category-btn">
-            <span>视频</span>
-            <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="dropdown-list" style="left: 0; width: 100%">
-            <div class="dropdown-option" data-category="video">视频</div>
-            <div class="dropdown-option" data-category="code">编程</div>
-            <div class="dropdown-option" data-category="social">社交</div>
+    <!-- 导航容器 -->
+    <div class="nav-wrapper">
+        <!-- 导航分类栏 -->
+        <div class="nav-tabs">
+            <div class="tab-buttons">
+                <div class="tab-slider"></div>
+                <div class="tab-button active" data-category="video">视频</div>
+                <div class="tab-button" data-category="code">编程</div>
+                <div class="tab-button" data-category="social">社交</div>
+            </div>
         </div>
-    </div>
 
-    <!-- 导航内容区 -->
-    <div class="nav-content">
-        <div class="nav-items active" data-category="video">
-            <a href="#" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">哔哩哔哩</div>
-            </a>
-            <a href="#" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">YouTube</div>
-            </a>
-            <a href="#" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">优酷</div>
-            </a>
-        </div>
-        <div class="nav-items" data-category="code">
-            <a href="https://github.com" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">GitHub</div>
-            </a>
-            <a href="https://stackoverflow.com" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">Stack Overflow</div>
-            </a>
-            <a href="https://vscode.dev" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">VS Code</div>
-            </a>
-        </div>
-        <div class="nav-items" data-category="social">
-            <a href="https://weibo.com" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">微博</div>
-            </a>
-            <a href="https://twitter.com" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">Twitter</div>
-            </a>
-            <a href="https://zhihu.com" class="nav-item">
-                <div class="nav-icon"></div>
-                <div class="nav-text">知乎</div>
-            </a>
+        <!-- 导航内容区 -->
+        <div class="nav-content">
+            <div class="nav-items active" data-category="video">
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">哔哩哔哩</div>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">YouTube</div>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">优酷</div>
+                </a>
+            </div>
+            <div class="nav-items" data-category="code">
+                <a href="https://github.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">GitHub</div>
+                </a>
+                <a href="https://stackoverflow.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">Stack Overflow</div>
+                </a>
+                <a href="https://vscode.dev" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">VS Code</div>
+                </a>
+            </div>
+            <div class="nav-items" data-category="social">
+                <a href="https://weibo.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">微博</div>
+                </a>
+                <a href="https://twitter.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">Twitter</div>
+                </a>
+                <a href="https://zhihu.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">知乎</div>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -301,53 +344,30 @@
         };
 
         let currentEngine = 'bing';
-        let currentCategory = 'video';
 
-        // 通用下拉控制
-        function setupDropdown(btnSelector, listSelector, updateCallback) {
-            const btn = document.querySelector(btnSelector);
-            const list = document.querySelector(listSelector);
-
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                list.classList.toggle('show');
+        // 引擎选择功能
+        document.querySelectorAll('.engine-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const engine = option.dataset.engine;
+                currentEngine = engine;
+                const iconClass = engines[engine].icon;
+                document.querySelector('.engine-btn').innerHTML = 
+                    `<i class="${iconClass}"></i>`;
+                closeEngineList();
             });
+        });
 
-            document.addEventListener('click', () => {
-                list.classList.remove('show');
-            });
+        // 显示/隐藏引擎列表
+        document.querySelector('.engine-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelector('.engine-list').classList.toggle('show');
+        });
 
-            if(updateCallback) {
-                list.querySelectorAll('.dropdown-option').forEach(option => {
-                    option.addEventListener('click', () => {
-                        updateCallback(option);
-                        list.classList.remove('show');
-                    });
-                });
-            }
+        // 点击空白处关闭
+        document.addEventListener('click', closeEngineList);
+        function closeEngineList() {
+            document.querySelector('.engine-list').classList.remove('show');
         }
-
-        // 搜索引擎设置
-        setupDropdown('.engine-select .engine-btn', '.engine-select .dropdown-list', (option) => {
-            const engine = option.dataset.engine;
-            currentEngine = engine;
-            document.querySelector('.engine-btn').innerHTML = 
-                `<i class="${engines[engine].icon}"></i>`;
-        });
-
-        // 分类设置
-        setupDropdown('.category-select .category-btn', '.category-select .dropdown-list', (option) => {
-            const category = option.dataset.category;
-            currentCategory = category;
-            document.querySelector('.category-btn span').textContent = category;
-            
-            document.querySelectorAll('.nav-items').forEach(item => {
-                item.classList.remove('active');
-                if(item.dataset.category === category) {
-                    item.classList.add('active');
-                }
-            });
-        });
 
         // 搜索功能
         document.querySelector('.search-btn').addEventListener('click', search);
@@ -359,6 +379,40 @@
             const query = document.querySelector('.search-input').value;
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
+
+        // 导航滑动功能
+        function initTabSlider() {
+            const buttons = document.querySelectorAll('.tab-button');
+            const slider = document.querySelector('.tab-slider');
+            
+            function updateSlider(target) {
+                const buttonTop = target.offsetTop;
+                const buttonHeight = target.offsetHeight;
+                slider.style.height = `${buttonHeight}px`;
+                slider.style.top = `${buttonTop}px`;
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    updateSlider(this);
+                    
+                    const category = this.dataset.category;
+                    document.querySelectorAll('.nav-items').forEach(item => {
+                        item.classList.remove('active');
+                        if(item.dataset.category === category) {
+                            item.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            updateSlider(document.querySelector('.tab-button.active'));
+        }
+
+        window.addEventListener('resize', initTabSlider);
+        initTabSlider();
     </script>
 </body>
 </html>
