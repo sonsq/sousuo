@@ -127,6 +127,7 @@
         .tab-slider {
             position: absolute;
             bottom: 0;
+            right: 0;
             height: 3px;
             background: #fff;
             border-radius: 2px;
@@ -153,6 +154,7 @@
             max-width: 800px;
             width: 90%;
             margin: 15px auto 0;
+            background: transparent;
         }
 
         .nav-items {
@@ -214,6 +216,10 @@
             
             .nav-items {
                 grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            
+            .tab-slider {
+                display: none;
             }
         }
     </style>
@@ -364,21 +370,27 @@
             const slider = document.querySelector('.tab-slider');
             const buttons = document.querySelectorAll('.tab-button');
             
+            // 初始化滑块位置
             function updateSlider(target) {
                 const index = Array.from(buttons).indexOf(target);
                 const buttonWidth = target.offsetWidth;
-                const buttonLeft = target.offsetLeft;
+                const buttonRight = tabs.offsetWidth - (target.offsetLeft + target.offsetWidth);
                 
                 slider.style.width = `${buttonWidth}px`;
-                slider.style.left = `${buttonLeft}px`;
+                slider.style.right = `${buttonRight}px`;
             }
 
+            // 点击事件
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
+                    // 移除激活状态
                     buttons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
+                    
+                    // 更新滑块
                     updateSlider(this);
                     
+                    // 切换内容
                     const category = this.dataset.category;
                     document.querySelectorAll('.nav-items').forEach(item => {
                         item.classList.remove('active');
@@ -389,10 +401,14 @@
                 });
             });
 
+            // 初始化第一个按钮
             updateSlider(document.querySelector('.tab-button.active'));
         }
 
+        // 窗口大小变化时重置滑块
         window.addEventListener('resize', initTabSlider);
+        
+        // 初始化
         initTabSlider();
     </script>
 </body>
