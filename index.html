@@ -17,8 +17,8 @@
         /* 搜索框容器 */
         .search-container {
             display: flex;
-            max-width: 600px;
-            width: 80%;
+            max-width: 800px;
+            width: 90%;
             margin: 0 auto 30px;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 30px;
@@ -28,7 +28,7 @@
         /* 搜索引擎选择 */
         .engine-select {
             position: relative;
-            width: 60px;
+            width: 120px;
             border-radius: 30px 0 0 30px;
             z-index: 200;
         }
@@ -50,8 +50,8 @@
             position: absolute;
             top: calc(100% + 5px);
             left: 0;
-            width: 90px;
-            background: rgba(255, 255, 255, 0.7);
+            width: 200px;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             display: none;
@@ -93,7 +93,7 @@
             width: 80px;
             padding: 15px 0;
             border: none;
-            background: rgba(255, 255, 255, 0);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 0 30px 30px 0;
             cursor: pointer;
             color: #333;
@@ -119,10 +119,10 @@
         /* 分类导航栏 */
         .nav-categories {
             position: relative;
-            width: 80px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 15px;
+            width: 180px;
         }
 
         .nav-highlight {
@@ -143,15 +143,15 @@
         }
 
         .nav-category.active {
-            color: rgba(255, 255, 255, 1);
+            color: #4a90e2;
         }
 
         /* 导航内容区 */
         .nav-content {
-            flex: 1;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 20px;
+            flex: 1;
         }
 
         .nav-items {
@@ -189,6 +189,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 移动端适配 */
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -199,14 +200,22 @@
                 width: 100%;
             }
             
+            .nav-wrapper {
+                flex-direction: column;
+            }
+            
             .nav-categories {
-                width: 100px;
-                padding: 10px;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .nav-highlight {
+                border-radius: 8px;
             }
             
             .nav-category {
-                padding: 8px;
-                font-size: 14px;
+                padding: 10px;
+                font-size: 15px;
             }
             
             .nav-icon {
@@ -259,11 +268,6 @@
             <div class="nav-category active" data-category="video">视频</div>
             <div class="nav-category" data-category="code">编程</div>
             <div class="nav-category" data-category="social">社交</div>
-            <div class="nav-category" data-category="social">Windows</div>
-            <div class="nav-category" data-category="social">Linux</div>
-            <div class="nav-category" data-category="social">综合</div>
-            <div class="nav-category" data-category="social">壁纸</div>
-            <div class="nav-category" data-category="social">其他</div>
         </div>
         
         <div class="nav-content">
@@ -356,7 +360,7 @@
             function updateHighlight(target) {
                 const top = target.offsetTop;
                 const height = target.offsetHeight;
-                highlight.style.width = '86%';
+                highlight.style.width = '100%';
                 highlight.style.height = `${height}px`;
                 highlight.style.top = `${top}px`;
             }
@@ -380,8 +384,9 @@
             updateHighlight(document.querySelector('.nav-category.active'));
         }
 
-        // 窗口大小变化时更新高亮位置
+        // 窗口大小变化时更新布局
         window.addEventListener('resize', () => {
+            // 更新高亮位置
             const activeCategory = document.querySelector('.nav-category.active');
             if(activeCategory) {
                 document.querySelector('.nav-highlight').style.transition = 'none';
