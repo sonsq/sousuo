@@ -108,61 +108,51 @@
             background: rgba(255, 255, 255, 0.9);
         }
 
-        /* 导航容器 */
-        .nav-wrapper {
+        /* 导航分类栏 */
+        .nav-tabs {
             max-width: 800px;
             width: 90%;
             margin: 30px auto 0;
-            display: flex;
-            gap: 20px;
-        }
-
-        /* 导航分类栏 */
-        .nav-tabs {
-            width: 120px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 15px 8px;
+            padding: 8px;
             position: relative;
         }
 
         .tab-buttons {
             display: flex;
-            flex-direction: column;
             position: relative;
         }
 
         .tab-slider {
             position: absolute;
-            left: 0;
-            width: 3px;
+            bottom: 0;
+            height: 3px;
             background: #fff;
             border-radius: 2px;
             transition: all 0.3s ease;
         }
 
         .tab-button {
-            padding: 12px 10px;
+            flex: 1;
+            padding: 12px 0;
             text-align: center;
             color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
+            position: relative;
             transition: color 0.3s;
             font-size: 14px;
-            border-radius: 8px;
-            margin: 4px 0;
         }
 
         .tab-button.active {
             color: white;
-            background: rgba(255, 255, 255, 0.1);
         }
 
         /* 导航内容区 */
         .nav-content {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
+            max-width: 800px;
+            width: 90%;
+            margin: 15px auto 0;
         }
 
         .nav-items {
@@ -205,30 +195,21 @@
                 padding: 15px;
             }
             
-            .nav-wrapper {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-tabs {
+            .search-container {
                 width: 100%;
-                padding: 10px;
             }
             
-            .tab-buttons {
-                flex-direction: row;
-                flex-wrap: wrap;
+            .engine-select {
+                width: 80px;
             }
             
-            .tab-slider {
-                display: none;
+            .engine-list {
+                width: 160px;
             }
             
             .tab-button {
-                flex: 1;
-                padding: 8px;
                 font-size: 13px;
-                margin: 2px;
+                padding: 10px 0;
             }
             
             .nav-items {
@@ -273,62 +254,59 @@
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- 导航容器 -->
-    <div class="nav-wrapper">
-        <!-- 导航分类栏 -->
-        <div class="nav-tabs">
-            <div class="tab-buttons">
-                <div class="tab-slider"></div>
-                <div class="tab-button active" data-category="video">视频</div>
-                <div class="tab-button" data-category="code">编程</div>
-                <div class="tab-button" data-category="social">社交</div>
-            </div>
+    <!-- 导航分类栏 -->
+    <div class="nav-tabs">
+        <div class="tab-buttons">
+            <div class="tab-slider"></div>
+            <div class="tab-button active" data-category="video">视频</div>
+            <div class="tab-button" data-category="code">编程</div>
+            <div class="tab-button" data-category="social">社交</div>
         </div>
+    </div>
 
-        <!-- 导航内容区 -->
-        <div class="nav-content">
-            <div class="nav-items active" data-category="video">
-                <a href="#" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">哔哩哔哩</div>
-                </a>
-                <a href="#" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">YouTube</div>
-                </a>
-                <a href="#" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">优酷</div>
-                </a>
-            </div>
-            <div class="nav-items" data-category="code">
-                <a href="https://github.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">GitHub</div>
-                </a>
-                <a href="https://stackoverflow.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">Stack Overflow</div>
-                </a>
-                <a href="https://vscode.dev" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">VS Code</div>
-                </a>
-            </div>
-            <div class="nav-items" data-category="social">
-                <a href="https://weibo.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">微博</div>
-                </a>
-                <a href="https://twitter.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">Twitter</div>
-                </a>
-                <a href="https://zhihu.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">知乎</div>
-                </a>
-            </div>
+    <!-- 导航内容区 -->
+    <div class="nav-content">
+        <div class="nav-items active" data-category="video">
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">哔哩哔哩</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">YouTube</div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">优酷</div>
+            </a>
+        </div>
+        <div class="nav-items" data-category="code">
+            <a href="https://github.com" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">GitHub</div>
+            </a>
+            <a href="https://stackoverflow.com" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">Stack Overflow</div>
+            </a>
+            <a href="https://vscode.dev" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">VS Code</div>
+            </a>
+        </div>
+        <div class="nav-items" data-category="social">
+            <a href="https://weibo.com" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">微博</div>
+            </a>
+            <a href="https://twitter.com" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">Twitter</div>
+            </a>
+            <a href="https://zhihu.com" class="nav-item">
+                <div class="nav-icon"></div>
+                <div class="nav-text">知乎</div>
+            </a>
         </div>
     </div>
 
@@ -382,14 +360,17 @@
 
         // 导航滑动功能
         function initTabSlider() {
-            const buttons = document.querySelectorAll('.tab-button');
+            const tabs = document.querySelector('.tab-buttons');
             const slider = document.querySelector('.tab-slider');
+            const buttons = document.querySelectorAll('.tab-button');
             
             function updateSlider(target) {
-                const buttonTop = target.offsetTop;
-                const buttonHeight = target.offsetHeight;
-                slider.style.height = `${buttonHeight}px`;
-                slider.style.top = `${buttonTop}px`;
+                const index = Array.from(buttons).indexOf(target);
+                const buttonWidth = target.offsetWidth;
+                const buttonLeft = target.offsetLeft;
+                
+                slider.style.width = `${buttonWidth}px`;
+                slider.style.left = `${buttonLeft}px`;
             }
 
             buttons.forEach(button => {
