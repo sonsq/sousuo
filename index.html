@@ -10,7 +10,7 @@
             background: linear-gradient(45deg, #667eea, #764ba2);
             min-height: 100vh;
             margin: 0;
-            padding: 5px;
+            padding: 20px;
             font-family: 'Segoe UI', sans-serif;
         }
 
@@ -118,31 +118,44 @@
 
         /* 分类导航栏 */
         .nav-categories {
-            width: 60px;
+            position: relative;
+            width: 180px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 5px;
+            border-radius: 20px;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .nav-slider {
+            position: absolute;
+            left: 0;
+            width: 4px;
+            background: #4a90e2;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            z-index: 1;
         }
 
         .nav-category {
+            position: relative;
             padding: 12px;
             cursor: pointer;
             border-radius: 12px;
-            transition: all 0.2s;
             color: white;
             margin-bottom: 8px;
+            transition: color 0.3s;
+            z-index: 2;
         }
 
-        .nav-category.active,
-        .nav-category:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .nav-category.active {
+            color: #4a90e2;
         }
 
         /* 导航内容区 */
         .nav-content {
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            border-radius: 20px;
             padding: 20px;
         }
 
@@ -183,7 +196,7 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 5px;
+                padding: 15px;
             }
             
             .search-container,
@@ -191,10 +204,13 @@
                 width: 100%;
             }
             
-            /* 移动端保持左右布局 */
             .nav-categories {
-                width: 30px;
-                padding: 5px;
+                width: 120px;
+                padding: 10px;
+            }
+            
+            .nav-slider {
+                width: 3px;
             }
             
             .nav-category {
@@ -248,6 +264,7 @@
     <!-- 导航模块 -->
     <div class="nav-wrapper">
         <div class="nav-categories">
+            <div class="nav-slider"></div>
             <div class="nav-category active" data-category="video">视频</div>
             <div class="nav-category" data-category="code">编程</div>
             <div class="nav-category" data-category="social">社交</div>
@@ -335,21 +352,40 @@
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
 
-        // 导航分类切换
-        document.querySelectorAll('.nav-category').forEach(category => {
-            category.addEventListener('click', () => {
-                document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
-                category.classList.add('active');
-                
-                const targetCategory = category.dataset.category;
-                document.querySelectorAll('.nav-items').forEach(item => {
-                    item.classList.remove('active');
-                    if(item.dataset.category === targetCategory) {
-                        item.classList.add('active');
-                    }
+        // 导航滑动条功能
+        function initNavSlider() {
+            const categories = document.querySelectorAll('.nav-category');
+            const slider = document.querySelector('.nav-slider');
+            
+            function updateSlider(target) {
+                const topPosition = target.offsetTop;
+                const height = target.offsetHeight;
+                slider.style.height = `${height}px`;
+                slider.style.top = `${topPosition}px`;
+            }
+
+            categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    categories.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    updateSlider(this);
+                    
+                    const targetCategory = this.dataset.category;
+                    document.querySelectorAll('.nav-items').forEach(item => {
+                        item.classList.remove('active');
+                        if(item.dataset.category === targetCategory) {
+                            item.classList.add('active');
+                        }
+                    });
                 });
             });
-        });
+
+            // 初始化滑动条位置
+            updateSlider(document.querySelector('.nav-category.active'));
+        }
+
+        // 初始化滑动条
+        initNavSlider();
     </script>
 </body>
 </html>
