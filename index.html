@@ -23,7 +23,6 @@
             background: rgba(255, 255, 255, 0.7);
             border-radius: 30px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
         }
 
         /* 搜索引擎选择 */
@@ -34,7 +33,7 @@
             z-index: 200;
         }
 
-        .engine-btn, .category-btn {
+        .engine-btn {
             width: 100%;
             height: 100%;
             padding: 15px;
@@ -47,7 +46,7 @@
             color: #333;
         }
 
-        .dropdown-list {
+        .engine-list {
             position: absolute;
             top: calc(100% + 5px);
             left: 0;
@@ -60,11 +59,11 @@
             z-index: 300;
         }
 
-        .dropdown-list.show {
+        .engine-list.show {
             display: block;
         }
 
-        .dropdown-option {
+        .engine-option {
             padding: 12px;
             cursor: pointer;
             border-radius: 8px;
@@ -75,7 +74,7 @@
             color: #333;
         }
 
-        .dropdown-option:hover {
+        .engine-option:hover {
             background: rgba(0, 0, 0, 0.05);
         }
 
@@ -117,17 +116,26 @@
             gap: 20px;
         }
 
-        /* 分类选择 */
-        .category-select {
+        /* 分类导航栏 */
+        .nav-categories {
             width: 180px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 30px;
-            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 15px;
         }
 
-        .category-btn {
-            justify-content: space-between;
-            padding: 15px 25px;
+        .nav-category {
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.2s;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .nav-category.active,
+        .nav-category:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* 导航内容区 */
@@ -178,30 +186,25 @@
                 padding: 15px;
             }
             
-            .search-container, .nav-wrapper {
-                width: 100%;
-            }
-            
-            .engine-select {
-                width: 80px;
-            }
-            
-            .dropdown-list {
-                width: 100%;
-                left: 0 !important;
-            }
-            
+            .search-container,
             .nav-wrapper {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .category-select {
                 width: 100%;
             }
             
-            .nav-items {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            /* 移动端保持左右布局 */
+            .nav-categories {
+                width: 120px;
+                padding: 10px;
+            }
+            
+            .nav-category {
+                padding: 8px;
+                font-size: 14px;
+            }
+            
+            .nav-icon {
+                width: 50px;
+                height: 50px;
             }
         }
     </style>
@@ -211,28 +214,28 @@
     <div class="search-container">
         <div class="engine-select">
             <button class="engine-btn"><i class="fab fa-windows"></i></button>
-            <div class="dropdown-list">
-                <div class="dropdown-option" data-engine="bing">
+            <div class="engine-list">
+                <div class="engine-option" data-engine="bing">
                     <i class="fab fa-windows"></i>
                     <span>必应</span>
                 </div>
-                <div class="dropdown-option" data-engine="google">
+                <div class="engine-option" data-engine="google">
                     <i class="fab fa-google"></i>
                     <span>谷歌</span>
                 </div>
-                <div class="dropdown-option" data-engine="baidu">
+                <div class="engine-option" data-engine="baidu">
                     <i class="fab fa-baidu"></i>
                     <span>百度</span>
                 </div>
-                <div class="dropdown-option" data-engine="zhihu">
+                <div class="engine-option" data-engine="zhihu">
                     <i class="fab fa-zhihu"></i>
                     <span>知乎</span>
                 </div>
-                <div class="dropdown-option" data-engine="sogou">
+                <div class="engine-option" data-engine="sogou">
                     <i class="fas fa-search"></i>
                     <span>搜狗</span>
                 </div>
-                <div class="dropdown-option" data-engine="toutiao">
+                <div class="engine-option" data-engine="toutiao">
                     <i class="fas fa-newspaper"></i>
                     <span>头条</span>
                 </div>
@@ -242,22 +245,14 @@
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- 导航容器 -->
+    <!-- 导航模块 -->
     <div class="nav-wrapper">
-        <!-- 分类选择 -->
-        <div class="category-select">
-            <button class="category-btn">
-                <span>视频</span>
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="dropdown-list" style="left: 0; width: 100%">
-                <div class="dropdown-option" data-category="video">视频</div>
-                <div class="dropdown-option" data-category="code">编程</div>
-                <div class="dropdown-option" data-category="social">社交</div>
-            </div>
+        <div class="nav-categories">
+            <div class="nav-category active" data-category="video">视频</div>
+            <div class="nav-category" data-category="code">编程</div>
+            <div class="nav-category" data-category="social">社交</div>
         </div>
-
-        <!-- 导航内容区 -->
+        
         <div class="nav-content">
             <div class="nav-items active" data-category="video">
                 <a href="#" class="nav-item">
@@ -267,10 +262,6 @@
                 <a href="#" class="nav-item">
                     <div class="nav-icon"></div>
                     <div class="nav-text">YouTube</div>
-                </a>
-                <a href="#" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">优酷</div>
                 </a>
             </div>
             <div class="nav-items" data-category="code">
@@ -282,10 +273,6 @@
                     <div class="nav-icon"></div>
                     <div class="nav-text">Stack Overflow</div>
                 </a>
-                <a href="https://vscode.dev" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">VS Code</div>
-                </a>
             </div>
             <div class="nav-items" data-category="social">
                 <a href="https://weibo.com" class="nav-item">
@@ -295,10 +282,6 @@
                 <a href="https://twitter.com" class="nav-item">
                     <div class="nav-icon"></div>
                     <div class="nav-text">Twitter</div>
-                </a>
-                <a href="https://zhihu.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">知乎</div>
                 </a>
             </div>
         </div>
@@ -316,52 +299,29 @@
         };
 
         let currentEngine = 'bing';
-        let currentCategory = 'video';
 
-        // 通用下拉控制
-        function setupDropdown(btnSelector, listSelector, updateCallback) {
-            const btn = document.querySelector(btnSelector);
-            const list = document.querySelector(listSelector);
-
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                list.classList.toggle('show');
+        // 引擎选择功能
+        document.querySelectorAll('.engine-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const engine = option.dataset.engine;
+                currentEngine = engine;
+                document.querySelector('.engine-btn').innerHTML = 
+                    `<i class="${engines[engine].icon}"></i>`;
+                document.querySelector('.engine-list').classList.remove('show');
             });
-
-            document.addEventListener('click', () => {
-                list.classList.remove('show');
-            });
-
-            if(updateCallback) {
-                list.querySelectorAll('.dropdown-option').forEach(option => {
-                    option.addEventListener('click', () => {
-                        updateCallback(option);
-                        list.classList.remove('show');
-                    });
-                });
-            }
-        }
-
-        // 搜索引擎设置
-        setupDropdown('.engine-select .engine-btn', '.engine-select .dropdown-list', (option) => {
-            const engine = option.dataset.engine;
-            currentEngine = engine;
-            document.querySelector('.engine-btn').innerHTML = 
-                `<i class="${engines[engine].icon}"></i>`;
         });
 
-        // 分类设置
-        setupDropdown('.category-select .category-btn', '.category-select .dropdown-list', (option) => {
-            const category = option.dataset.category;
-            currentCategory = category;
-            document.querySelector('.category-btn span').textContent = category;
-            
-            document.querySelectorAll('.nav-items').forEach(item => {
-                item.classList.remove('active');
-                if(item.dataset.category === category) {
-                    item.classList.add('active');
-                }
-            });
+        // 显示/隐藏引擎列表
+        document.querySelector('.engine-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelector('.engine-list').classList.toggle('show');
+        });
+
+        // 点击空白处关闭
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.engine-select')) {
+                document.querySelector('.engine-list').classList.remove('show');
+            }
         });
 
         // 搜索功能
@@ -374,6 +334,22 @@
             const query = document.querySelector('.search-input').value;
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
+
+        // 导航分类切换
+        document.querySelectorAll('.nav-category').forEach(category => {
+            category.addEventListener('click', () => {
+                document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+                
+                const targetCategory = category.dataset.category;
+                document.querySelectorAll('.nav-items').forEach(item => {
+                    item.classList.remove('active');
+                    if(item.dataset.category === targetCategory) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
