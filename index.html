@@ -123,28 +123,23 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 15px;
-            overflow: hidden;
         }
 
-        .nav-slider {
+        .nav-highlight {
             position: absolute;
-            left: 0;
-            width: 4px;
-            background: #4a90e2;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            z-index: 1;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-category {
             position: relative;
             padding: 12px;
             cursor: pointer;
-            border-radius: 12px;
             color: white;
             margin-bottom: 8px;
-            transition: color 0.3s;
             z-index: 2;
+            transition: color 0.3s;
         }
 
         .nav-category.active {
@@ -209,10 +204,6 @@
                 padding: 10px;
             }
             
-            .nav-slider {
-                width: 3px;
-            }
-            
             .nav-category {
                 padding: 8px;
                 font-size: 14px;
@@ -264,7 +255,7 @@
     <!-- 导航模块 -->
     <div class="nav-wrapper">
         <div class="nav-categories">
-            <div class="nav-slider"></div>
+            <div class="nav-highlight"></div>
             <div class="nav-category active" data-category="video">视频</div>
             <div class="nav-category" data-category="code">编程</div>
             <div class="nav-category" data-category="social">社交</div>
@@ -352,40 +343,52 @@
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
 
-        // 导航滑动条功能
-        function initNavSlider() {
+        // 导航滑动高亮功能
+        function initNavHighlight() {
             const categories = document.querySelectorAll('.nav-category');
-            const slider = document.querySelector('.nav-slider');
+            const highlight = document.querySelector('.nav-highlight');
             
-            function updateSlider(target) {
-                const topPosition = target.offsetTop;
+            function updateHighlight(target) {
+                const top = target.offsetTop;
                 const height = target.offsetHeight;
-                slider.style.height = `${height}px`;
-                slider.style.top = `${topPosition}px`;
+                highlight.style.width = '100%';
+                highlight.style.height = `${height}px`;
+                highlight.style.top = `${top}px`;
             }
 
             categories.forEach(category => {
                 category.addEventListener('click', function() {
                     categories.forEach(c => c.classList.remove('active'));
                     this.classList.add('active');
-                    updateSlider(this);
+                    
+                    updateHighlight(this);
                     
                     const targetCategory = this.dataset.category;
                     document.querySelectorAll('.nav-items').forEach(item => {
                         item.classList.remove('active');
-                        if(item.dataset.category === targetCategory) {
-                            item.classList.add('active');
-                        }
+                        item.dataset.category === targetCategory && item.classList.add('active');
                     });
                 });
             });
 
-            // 初始化滑动条位置
-            updateSlider(document.querySelector('.nav-category.active'));
+            // 初始化高亮位置
+            updateHighlight(document.querySelector('.nav-category.active'));
         }
 
-        // 初始化滑动条
-        initNavSlider();
+        // 窗口大小变化时更新高亮位置
+        window.addEventListener('resize', () => {
+            const activeCategory = document.querySelector('.nav-category.active');
+            if(activeCategory) {
+                document.querySelector('.nav-highlight').style.transition = 'none';
+                initNavHighlight();
+                setTimeout(() => {
+                    document.querySelector('.nav-highlight').style.transition = '';
+                }, 10);
+            }
+        });
+
+        // 初始化
+        initNavHighlight();
     </script>
 </body>
 </html>
