@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>极简搜索导航</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet>
     <style>
         body {
             background: linear-gradient(45deg, #667eea, #764ba2);
@@ -123,7 +123,6 @@
             border-radius: 20px;
             padding: 15px;
             width: 180px;
-            box-sizing: border-box;
         }
 
         .nav-highlight {
@@ -131,8 +130,6 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: calc(100% - 30px); /* 修复桌面端宽度问题 */
-            left: 15px; /* 对齐内边距 */
         }
 
         .nav-category {
@@ -207,7 +204,7 @@
                 flex-direction: column;
             }
             
-            /* 修正移动端导航栏宽度 */
+            /* 修改导航栏为横向滚动布局 */
             .nav-categories {
                 display: flex;
                 flex-direction: row;
@@ -216,8 +213,8 @@
                 scrollbar-width: none;
                 -ms-overflow-style: none;
                 padding: 10px 15px;
-                width: calc(100% - 30px); /* 对齐内容区宽度 */
-                /* margin: 0 auto 15px; */
+                width: 100%;
+                margin-bottom: 15px;
             }
 
             .nav-categories::-webkit-scrollbar {
@@ -232,13 +229,12 @@
                 margin-bottom: 0;
             }
 
-            /* 调整移动端高亮样式 */
+            /* 调整高亮样式 */
             .nav-highlight {
-                height: 70% !important;
-                width: auto !important;
-                top: 50% !important;
-                left: 15px !important;
-                transform: translateY(-50%) !important;
+                height: 70%;
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 8px;
             }
             
             .nav-icon {
@@ -381,17 +377,20 @@
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
             if (isMobile) {
-                const left = target.offsetLeft - target.parentElement.offsetLeft;
+                const left = target.offsetLeft;
                 const width = target.offsetWidth;
                 highlight.style.width = `${width}px`;
                 highlight.style.left = `${left}px`;
+                highlight.style.height = '70%';
+                highlight.style.top = '50%';
+                highlight.style.transform = 'translateY(-50%)';
             } else {
-                highlight.style.width = '';
-                highlight.style.left = '';
                 const top = target.offsetTop;
                 const height = target.offsetHeight;
+                highlight.style.width = '100%';
                 highlight.style.height = `${height}px`;
                 highlight.style.top = `${top}px`;
+                highlight.style.transform = 'none';
             }
         }
 
