@@ -14,7 +14,6 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* 搜索框容器 */
         .search-container {
             display: flex;
             max-width: 800px;
@@ -23,7 +22,6 @@
             background: rgba(255, 255, 255, 0.7);
             border-radius: 30px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
         }
 
         .engine-select {
@@ -85,18 +83,6 @@
             font-size: 16px;
             background: transparent;
             color: #333;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .search-input:focus {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .search-container:focus-within {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            background: rgba(255, 255, 255, 0.85);
         }
 
         .search-btn {
@@ -117,7 +103,6 @@
             background: rgba(255, 255, 255, 0.9);
         }
 
-        /* 导航容器 */
         .nav-wrapper {
             max-width: 800px;
             width: 90%;
@@ -126,7 +111,6 @@
             gap: 20px;
         }
 
-        /* 分类导航栏 */
         .nav-categories {
             position: relative;
             background: rgba(255, 255, 255, 0.1);
@@ -159,7 +143,6 @@
             color: #4a90e2;
         }
 
-        /* 导航内容区 */
         .nav-content {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
@@ -202,7 +185,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 移动端适配 */
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -226,7 +208,7 @@
                 -ms-overflow-style: none;
                 padding: 12px 15px;
                 width: auto;
-                max-width: calc(100% - 30px);
+                max-width: 100%;
                 margin: 0 auto 15px;
                 scroll-behavior: smooth;
             }
@@ -255,25 +237,10 @@
                 width: 50px;
                 height: 50px;
             }
-
-            .search-input {
-                padding: 12px;
-                font-size: 15px;
-            }
-
-            .engine-btn {
-                padding: 12px;
-            }
-
-            .search-btn {
-                width: 70px;
-                padding: 12px 0;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- 搜索框 -->
     <div class="search-container">
         <div class="engine-select">
             <button class="engine-btn"><i class="fab fa-windows"></i></button>
@@ -308,7 +275,6 @@
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- 导航模块 -->
     <div class="nav-wrapper">
         <div class="nav-categories">
             <div class="nav-highlight"></div>
@@ -351,11 +317,11 @@
                     <div class="nav-text">Twitter</div>
                 </a>
             </div>
+            <!-- 其他分类内容 -->
         </div>
     </div>
 
     <script>
-        // 搜索引擎配置
         const engines = {
             bing: { icon: 'fab fa-windows', url: 'https://www.bing.com/search?q=' },
             google: { icon: 'fab fa-google', url: 'https://www.google.com/search?q=' },
