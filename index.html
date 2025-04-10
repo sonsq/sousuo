@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>极简搜索导航</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet>
     <style>
         body {
             background: linear-gradient(45deg, #667eea, #764ba2);
@@ -204,18 +204,37 @@
                 flex-direction: column;
             }
             
+            /* 修改导航栏为横向滚动布局 */
             .nav-categories {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                white-space: nowrap;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding: 10px 15px;
                 width: 100%;
                 margin-bottom: 15px;
             }
-            
-            .nav-highlight {
-                border-radius: 8px;
+
+            .nav-categories::-webkit-scrollbar {
+                display: none;
             }
-            
+
             .nav-category {
-                padding: 10px;
+                flex-shrink: 0;
+                margin: 0 8px 0 0;
+                padding: 10px 15px;
                 font-size: 15px;
+                margin-bottom: 0;
+            }
+
+            /* 调整高亮样式 */
+            .nav-highlight {
+                height: 70%;
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 8px;
             }
             
             .nav-icon {
@@ -353,52 +372,60 @@
         }
 
         // 导航滑动高亮功能
-        function initNavHighlight() {
-            const categories = document.querySelectorAll('.nav-category');
+        function updateHighlight(target) {
             const highlight = document.querySelector('.nav-highlight');
-            
-            function updateHighlight(target) {
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+            if (isMobile) {
+                const left = target.offsetLeft;
+                const width = target.offsetWidth;
+                highlight.style.width = `${width}px`;
+                highlight.style.left = `${left}px`;
+                highlight.style.height = '70%';
+                highlight.style.top = '50%';
+                highlight.style.transform = 'translateY(-50%)';
+            } else {
                 const top = target.offsetTop;
                 const height = target.offsetHeight;
                 highlight.style.width = '100%';
                 highlight.style.height = `${height}px`;
                 highlight.style.top = `${top}px`;
+                highlight.style.transform = 'none';
             }
+        }
 
-            categories.forEach(category => {
-                category.addEventListener('click', function() {
-                    categories.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    updateHighlight(this);
-                    
-                    const targetCategory = this.dataset.category;
-                    document.querySelectorAll('.nav-items').forEach(item => {
-                        item.classList.remove('active');
-                        item.dataset.category === targetCategory && item.classList.add('active');
-                    });
+        // 导航分类点击事件
+        document.querySelectorAll('.nav-category').forEach(category => {
+            category.addEventListener('click', function() {
+                document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                
+                updateHighlight(this);
+                
+                const targetCategory = this.dataset.category;
+                document.querySelectorAll('.nav-items').forEach(item => {
+                    item.classList.remove('active');
+                    if(item.dataset.category === targetCategory) {
+                        item.classList.add('active');
+                    }
                 });
             });
-
-            // 初始化高亮位置
-            updateHighlight(document.querySelector('.nav-category.active'));
-        }
+        });
 
         // 窗口大小变化时更新布局
         window.addEventListener('resize', () => {
-            // 更新高亮位置
-            const activeCategory = document.querySelector('.nav-category.active');
-            if(activeCategory) {
+            const active = document.querySelector('.nav-category.active');
+            if (active) {
                 document.querySelector('.nav-highlight').style.transition = 'none';
-                initNavHighlight();
+                updateHighlight(active);
                 setTimeout(() => {
                     document.querySelector('.nav-highlight').style.transition = '';
                 }, 10);
             }
         });
 
-        // 初始化
-        initNavHighlight();
+        // 初始化高亮位置
+        updateHighlight(document.querySelector('.nav-category.active'));
     </script>
 </body>
 </html>
