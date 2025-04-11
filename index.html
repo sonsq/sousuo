@@ -15,25 +15,101 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* 搜索容器优化 */
         .search-container {
             display: flex;
             max-width: 800px;
             width: 94%;
             margin: 0 auto 15px;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 18px;
+            border-radius: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            height: 44px;
+            height: 46px;
             align-items: center;
         }
 
-        /* 桌面端样式保持不变 */
-        .engine-select { /*...*/ }
-        .engine-btn { /*...*/ }
-        .engine-list { /*...*/ }
-        .engine-option { /*...*/ }
-        .search-input { /*...*/ }
-        .search-btn { /*...*/ }
+        .engine-select {
+            position: relative;
+            width: 60px;
+            border-radius: 20px 0 0 20px;
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .engine-btn {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            border: none;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .engine-list {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 180px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 8px;
+            z-index: 300;
+        }
+
+        .engine-list.show {
+            display: block;
+        }
+
+        .engine-option {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .engine-option:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0 10px;
+            border: none;
+            font-size: 15px;
+            background: transparent;
+            color: #333;
+            outline: none;
+            -webkit-appearance: none;
+            height: 100%;
+            line-height: 46px;
+        }
+
+        .search-btn {
+            width: 50px;
+            height: 100%;
+            padding: 0;
+            border: none;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            color: #333;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         .nav-wrapper {
             max-width: 800px;
@@ -83,61 +159,126 @@
             flex: 1;
         }
 
-        /* 移动端专属优化 */
+        .nav-items {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 15px;
+            animation: fadeIn 0.3s;
+        }
+
+        .nav-items.active {
+            display: grid;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .nav-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 0 auto 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
-            .nav-categories {
-                height: 40px !important; /* 导航栏总高度 */
-                padding: 4px 10px !important;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-            }
-
-            .nav-category {
-                height: 32px !important; /* 按钮高度 */
-                line-height: 32px !important;
-                padding: 0 12px !important;
-                margin: 0 8px 0 0 !important;
-                font-size: 13px !important;
-                border-radius: 8px;
-            }
-
-            .nav-highlight {
-                height: 32px !important; /* 与按钮同高 */
-                border-radius: 8px !important;
-                transition: all 0.2s ease;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-            }
-
-            /* 搜索栏保持原有优化 */
             .search-container {
                 width: 100%;
                 height: 44px;
                 border-radius: 18px;
             }
-        }
 
-        .nav-items { /*...*/ }
-        .nav-item { /*...*/ }
-        .nav-icon { /*...*/ }
-        @keyframes fadeIn { /*...*/ }
+            .engine-select {
+                width: 54px;
+            }
+
+            .search-input {
+                font-size: 14px !important;
+                line-height: 44px;
+            }
+
+            .nav-wrapper {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-categories {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 10px 12px;
+                width: auto;
+                border-radius: 14px;
+            }
+
+            .nav-category {
+                padding: 8px 16px !important;
+                margin: 0 12px 0 0 !important;
+            }
+
+            .nav-highlight {
+                height: 60% !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+            }
+
+            .nav-icon {
+                width: 46px;
+                height: 46px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- 搜索栏结构保持不变 -->
     <div class="search-container">
         <div class="engine-select">
             <button class="engine-btn"><i class="fab fa-windows"></i></button>
             <div class="engine-list">
-                <!-- 引擎选项保持不变 -->
+                <div class="engine-option" data-engine="bing">
+                    <i class="fab fa-windows"></i>
+                    <span>必应</span>
+                </div>
+                <div class="engine-option" data-engine="google">
+                    <i class="fab fa-google"></i>
+                    <span>谷歌</span>
+                </div>
+                <div class="engine-option" data-engine="baidu">
+                    <i class="fab fa-baidu"></i>
+                    <span>百度</span>
+                </div>
+                <div class="engine-option" data-engine="zhihu">
+                    <i class="fab fa-zhihu"></i>
+                    <span>知乎</span>
+                </div>
+                <div class="engine-option" data-engine="sogou">
+                    <i class="fas fa-search"></i>
+                    <span>搜狗</span>
+                </div>
+                <div class="engine-option" data-engine="toutiao">
+                    <i class="fas fa-newspaper"></i>
+                    <span>头条</span>
+                </div>
             </div>
         </div>
         <input type="text" class="search-input" placeholder="输入搜索内容...">
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- 导航栏结构 -->
     <div class="nav-wrapper">
         <div class="nav-categories">
             <div class="nav-highlight"></div>
@@ -150,30 +291,41 @@
         </div>
         
         <div class="nav-content">
-            <!-- 导航内容保持不变 -->
+            <div class="nav-items active" data-category="video">
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">哔哩哔哩</div>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">YouTube</div>
+                </a>
+            </div>
+            <div class="nav-items" data-category="code">
+                <a href="https://github.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">GitHub</div>
+                </a>
+                <a href="https://stackoverflow.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">Stack Overflow</div>
+                </a>
+            </div>
+            <div class="nav-items" data-category="social">
+                <a href="https://weibo.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">微博</div>
+                </a>
+                <a href="https://twitter.com" class="nav-item">
+                    <div class="nav-icon"></div>
+                    <div class="nav-text">Twitter</div>
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        // 更新高亮定位逻辑
-        function updateHighlight(target) {
-            const highlight = document.querySelector('.nav-highlight');
-            const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-            if (isMobile) {
-                const container = target.parentElement;
-                const scrollLeft = container.scrollLeft;
-                
-                highlight.style.width = `${target.offsetWidth}px`;
-                highlight.style.left = `${target.offsetLeft}px`;
-                highlight.style.top = '50%';
-                highlight.style.transform = 'translateY(-50%)';
-            } else {
-                // 桌面端逻辑保持不变
-            }
-        }
-
-        // 保持其他JavaScript功能不变
+        // 双击缩放限制
         let lastTouch = 0;
         document.addEventListener('touchstart', function(e) {
             const now = Date.now();
@@ -181,8 +333,100 @@
             lastTouch = now;
         }, { passive: false });
 
-        // 引擎选择、搜索功能等保持原样
-        // ...
+        const engines = {
+            bing: { icon: 'fab fa-windows', url: 'https://www.bing.com/search?q=' },
+            google: { icon: 'fab fa-google', url: 'https://www.google.com/search?q=' },
+            baidu: { icon: 'fab fa-baidu', url: 'https://www.baidu.com/s?wd=' },
+            zhihu: { icon: 'fab fa-zhihu', url: 'https://www.zhihu.com/search?q=' },
+            sogou: { icon: 'fas fa-search', url: 'https://www.sogou.com/web?query=' },
+            toutiao: { icon: 'fas fa-newspaper', url: 'https://www.toutiao.com/search?keyword=' }
+        };
+
+        let currentEngine = 'bing';
+
+        document.querySelectorAll('.engine-option').forEach(option => {
+            option.addEventListener('click', () => {
+                currentEngine = option.dataset.engine;
+                document.querySelector('.engine-btn').innerHTML = 
+                    `<i class="${engines[currentEngine].icon}"></i>`;
+                document.querySelector('.engine-list').classList.remove('show');
+            });
+        });
+
+        document.querySelector('.engine-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelector('.engine-list').classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.engine-select')) {
+                document.querySelector('.engine-list').classList.remove('show');
+            }
+        });
+
+        document.querySelector('.search-btn').addEventListener('click', search);
+        document.querySelector('.search-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') search();
+        });
+
+        function search() {
+            const query = document.querySelector('.search-input').value;
+            window.open(engines[currentEngine].url + encodeURIComponent(query));
+        }
+
+        function updateHighlight(target) {
+            const highlight = document.querySelector('.nav-highlight');
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+            if (isMobile) {
+                const container = target.parentElement;
+                const scrollLeft = container.scrollLeft;
+                const relativeLeft = target.offsetLeft - (container.offsetWidth/2 - target.offsetWidth/2);
+                
+                highlight.style.width = `${target.offsetWidth}px`;
+                highlight.style.left = `${target.offsetLeft}px`;
+                highlight.style.top = '50%';
+                highlight.style.transform = 'translateY(-50%)';
+            } else {
+                highlight.style.width = 'calc(100% - 24px)';
+                highlight.style.left = '12px';
+                highlight.style.height = `${target.offsetHeight}px`;
+                highlight.style.top = `${target.offsetTop}px`;
+            }
+        }
+
+        document.querySelectorAll('.nav-category').forEach(category => {
+            category.addEventListener('click', function() {
+                document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                updateHighlight(this);
+                
+                document.querySelectorAll('.nav-items').forEach(item => {
+                    item.classList.remove('active');
+                    if(item.dataset.category === this.dataset.category) item.classList.add('active');
+                });
+
+                if (window.matchMedia("(max-width: 768px)").matches) {
+                    this.parentElement.scrollTo({
+                        left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            const active = document.querySelector('.nav-category.active');
+            if (active) {
+                document.querySelector('.nav-highlight').style.transition = 'none';
+                updateHighlight(active);
+                setTimeout(() => {
+                    document.querySelector('.nav-highlight').style.transition = '';
+                }, 10);
+            }
+        });
+
+        updateHighlight(document.querySelector('.nav-category.active'));
     </script>
 </body>
 </html>
