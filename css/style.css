@@ -1,432 +1,289 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>极简搜索导航</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            min-height: 100vh;
-            margin: 0;
-            padding: 12px;
-            font-family: 'Segoe UI', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+}
 
-        /* 搜索容器优化 */
-        .search-container {
-            display: flex;
-            max-width: 800px;
-            width: 94%;
-            margin: 0 auto 15px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            height: 46px;
-            align-items: center;
-        }
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 12px;
+    font-family: 'Segoe UI', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    background-color: rgba(0, 0, 0, 1);
+    background: url(https://www.yumus.cn/api/?target=img&brand=bing&ua=pc) rgba(200, 200, 200, 0.5) no-repeat fixed;
+}
 
-        .engine-select {
-            position: relative;
-            width: 60px;
-            border-radius: 20px 0 0 20px;
-            flex-shrink: 0;
-            height: 100%;
-        }
+/* 时钟 */
+.time_date{
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0px 0px 8px rgba(35, 35, 35, 1);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
 
-        .engine-btn {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            border: none;
-            background: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
-            -webkit-tap-highlight-color: transparent;
-        }
+.time{
+    margin-top: 55px;
+    height: 100px;
+    font-size: 80px;
+}
 
-        .engine-list {
-            position: absolute;
-            top: calc(100% + 5px);
-            left: 0;
-            width: 180px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            display: none;
-            padding: 8px;
-            z-index: 300;
-        }
+.date{
+    height: 50px;
+    font-size: 22px;
+}
 
-        .engine-list.show {
-            display: block;
-        }
+/* 搜索 */
+.search-container {
+    display: flex;
+    max-width: 600px;
+    width: 94%;
+    margin: 0 auto 55px; 
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+    height: 46px;
+    align-items: center;
+}
 
-        .engine-option {
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #333;
-        }
+.engine-select {
+    position: relative;
+    width: 60px;
+    border-radius: 20px 0 0 20px;
+    flex-shrink: 0;
+    height: 100%;
+}
 
-        .engine-option:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
+.engine-btn {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        .search-input {
-            flex: 1;
-            padding: 0 10px;
-            border: none;
-            font-size: 15px;
-            background: transparent;
-            color: #333;
-            outline: none;
-            -webkit-appearance: none;
-            height: 100%;
-            line-height: 46px;
-        }
+.engine-list {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 85px;
+    display: none;
+    padding: 8px;
+    border-radius: 12px;
+    z-index: 300;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-        .search-btn {
-            width: 50px;
-            height: 100%;
-            padding: 0;
-            border: none;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
-            color: #333;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-tap-highlight-color: transparent;
-        }
+.engine-list.show {
+    display: block;
+}
 
-        .nav-wrapper {
-            max-width: 800px;
-            width: 94%;
-            margin: 0 auto;
-            display: flex;
-            gap: 15px;
-        }
+.engine-icon {
+    width: 24px;
+    height: 24px;
+}
 
-        .nav-categories {
-            position: relative;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 12px;
-            width: 160px;
-            box-sizing: border-box;
-        }
+.engine-option {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: rgba(51, 51, 51, 1);
+}
 
-        .nav-highlight {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: calc(100% - 24px);
-            left: 12px;
-        }
+.engine-option:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
 
-        .nav-category {
-            position: relative;
-            padding: 10px;
-            cursor: pointer;
-            color: white;
-            margin-bottom: 6px;
-            z-index: 2;
-            transition: color 0.3s;
-            font-size: 14px;
-        }
+.search-input {
+    flex: 1;
+    border: none;
+    font-size: 15px;
+    background: transparent;
+    outline: none;
+    -webkit-appearance: none;
+    height: 100%;
+    line-height: 46px;
+}
 
-        .nav-category.active {
-            color: #4a90e2;
-        }
+.search-btn {
+    width: 50px;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+}      
 
-        .nav-content {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 15px;
-            flex: 1;
-        }
+.search-icon {
+    width: 24px;
+    height: 24px;
+}
 
-        .nav-items {
-            display: none;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 15px;
-            animation: fadeIn 0.3s;
-        }
+/* 导航 */
+.nav-wrapper {
+    max-width: 800px;
+    width: 94%;
+    margin: 0 auto;
+    display: flex;
+    gap: 15px;
+}
 
-        .nav-items.active {
-            display: grid;
-        }
+.nav-categories {
+    position: relative;
+    border-radius: 16px;
+    padding: 12px;
+    width: 120px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+}
 
-        .nav-item {
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-        }
+.nav-highlight {
+    position: absolute;
+    background: rgba(66, 133, 244, 1);
+    border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: calc(100% - 24px);
+    left: 12px;
+}
 
-        .nav-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            margin: 0 auto 6px;
-            transition: all 0.2s;
-        }
+.nav-category {
+    display: flex;
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 1);
+    margin-bottom: 6px;
+    z-index: 2;
+    transition: color 0.3s;
+    font-size: 14px;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    text-shadow: 0px 0px 3px rgba(35, 35, 35, 1);
+}
 
-        .nav-item:hover .nav-icon {
-            transform: translateY(-2px);
-        }
+.nav-content {
+    flex: 1;
+    padding: 15px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+.nav-items {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 15px;
+    animation: fadeIn 0.3s;
+}
 
-        @media (max-width: 768px) {
-            .search-container {
-                width: 100%;
-                height: 44px;
-                border-radius: 18px;
-            }
+.nav-items.active {
+    display: grid;
+}
 
-            .engine-select {
-                width: 54px;
-            }
+.nav-item {
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+    font-size: 13px;
+    text-shadow: 0px 0px 3px rgba(35, 35, 35, 1);
+}
 
-            .search-input {
-                font-size: 14px !important;
-                line-height: 44px;
-            }
+.nav-icon {
+    width:32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 1);
+    margin: 0 auto 6px;
+    transition: all 0.2s;
+    padding: 8px;
+    object-fit: contain;
+}
 
-            .nav-wrapper {
-                flex-direction: column;
-                width: 100%;
-            }
+.nav-item:hover .nav-icon {
+    transform: translateY(-2px);
+}
 
-            .nav-categories {
-                display: flex;
-                flex-direction: row;
-                overflow-x: auto;
-                white-space: nowrap;
-                padding: 10px 12px;
-                width: auto;
-                border-radius: 14px;
-            }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-            .nav-category {
-                padding: 8px 16px !important;
-                margin: 0 12px 0 0 !important;
-            }
+@media (max-width: 768px) {
+    .time{
+        margin-top: 25px;
+        height: 80px;
+        font-size: 45px;
+    }
+    
+    .date{
+        height: 40px;
+        font-size: 18px;
+    }
 
-            .nav-highlight {
-                height: 60% !important;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-            }
+    .search-container {
+        width: 85%;
+        height: 44px;
+        border-radius: 18px;
+    }
 
-            .nav-icon {
-                width: 46px;
-                height: 46px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="search-container">
-        <div class="engine-select">
-            <button class="engine-btn"><i class="fab fa-windows"></i></button>
-            <div class="engine-list">
-                <div class="engine-option" data-engine="bing">
-                    <i class="fab fa-windows"></i>
-                    <span>必应</span>
-                </div>
-                <div class="engine-option" data-engine="google">
-                    <i class="fab fa-google"></i>
-                    <span>谷歌</span>
-                </div>
-                <div class="engine-option" data-engine="baidu">
-                    <i class="fab fa-baidu"></i>
-                    <span>百度</span>
-                </div>
-                <div class="engine-option" data-engine="zhihu">
-                    <i class="fab fa-zhihu"></i>
-                    <span>知乎</span>
-                </div>
-                <div class="engine-option" data-engine="sogou">
-                    <i class="fas fa-search"></i>
-                    <span>搜狗</span>
-                </div>
-                <div class="engine-option" data-engine="toutiao">
-                    <i class="fas fa-newspaper"></i>
-                    <span>头条</span>
-                </div>
-            </div>
-        </div>
-        <input type="text" class="search-input" placeholder="输入搜索内容...">
-        <button class="search-btn"><i class="fas fa-search"></i></button>
-    </div>
+    .engine-select {
+        width: 54px;
+    }
 
-    <div class="nav-wrapper">
-        <div class="nav-categories">
-            <div class="nav-highlight"></div>
-            <div class="nav-category active" data-category="video">视频</div>
-            <div class="nav-category" data-category="code">编程</div>
-            <div class="nav-category" data-category="social">社交</div>
-            <div class="nav-category" data-category="news">新闻</div>
-            <div class="nav-category" data-category="music">音乐</div>
-            <div class="nav-category" data-category="shopping">购物</div>
-        </div>
-        
-        <div class="nav-content">
-            <div class="nav-items active" data-category="video">
-                <a href="#" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">哔哩哔哩</div>
-                </a>
-                <a href="#" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">YouTube</div>
-                </a>
-            </div>
-            <div class="nav-items" data-category="code">
-                <a href="https://github.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">GitHub</div>
-                </a>
-                <a href="https://stackoverflow.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">Stack Overflow</div>
-                </a>
-            </div>
-            <div class="nav-items" data-category="social">
-                <a href="https://weibo.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">微博</div>
-                </a>
-                <a href="https://twitter.com" class="nav-item">
-                    <div class="nav-icon"></div>
-                    <div class="nav-text">Twitter</div>
-                </a>
-            </div>
-        </div>
-    </div>
+    .search-input {
+        font-size: 14px;
+        line-height: 44px;
+    }
 
-    <script>
-        // 双击缩放限制
-        let lastTouch = 0;
-        document.addEventListener('touchstart', function(e) {
-            const now = Date.now();
-            if (now - lastTouch <= 300) e.preventDefault();
-            lastTouch = now;
-        }, { passive: false });
+    .nav-wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
 
-        const engines = {
-            bing: { icon: 'fab fa-windows', url: 'https://www.bing.com/search?q=' },
-            google: { icon: 'fab fa-google', url: 'https://www.google.com/search?q=' },
-            baidu: { icon: 'fab fa-baidu', url: 'https://www.baidu.com/s?wd=' },
-            zhihu: { icon: 'fab fa-zhihu', url: 'https://www.zhihu.com/search?q=' },
-            sogou: { icon: 'fas fa-search', url: 'https://www.sogou.com/web?query=' },
-            toutiao: { icon: 'fas fa-newspaper', url: 'https://www.toutiao.com/search?keyword=' }
-        };
+    .nav-categories {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        padding: 10px 12px;
+        width: auto;
+        border-radius: 14px;
+    }
 
-        let currentEngine = 'bing';
+    .nav-category {
+        padding: 8px 16px;
+        margin: 0 12px 0 0;
+    }
 
-        document.querySelectorAll('.engine-option').forEach(option => {
-            option.addEventListener('click', () => {
-                currentEngine = option.dataset.engine;
-                document.querySelector('.engine-btn').innerHTML = 
-                    `<i class="${engines[currentEngine].icon}"></i>`;
-                document.querySelector('.engine-list').classList.remove('show');
-            });
-        });
+    .nav-highlight {
+        height: 60%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 
-        document.querySelector('.engine-btn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            document.querySelector('.engine-list').classList.toggle('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.engine-select')) {
-                document.querySelector('.engine-list').classList.remove('show');
-            }
-        });
-
-        document.querySelector('.search-btn').addEventListener('click', search);
-        document.querySelector('.search-input').addEventListener('keypress', e => {
-            if (e.key === 'Enter') search();
-        });
-
-        function search() {
-            const query = document.querySelector('.search-input').value;
-            window.open(engines[currentEngine].url + encodeURIComponent(query));
-        }
-
-        function updateHighlight(target) {
-            const highlight = document.querySelector('.nav-highlight');
-            const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-            if (isMobile) {
-                const container = target.parentElement;
-                const scrollLeft = container.scrollLeft;
-                const relativeLeft = target.offsetLeft - (container.offsetWidth/2 - target.offsetWidth/2);
-                
-                highlight.style.width = `${target.offsetWidth}px`;
-                highlight.style.left = `${target.offsetLeft}px`;
-                highlight.style.top = '50%';
-                highlight.style.transform = 'translateY(-50%)';
-            } else {
-                highlight.style.width = 'calc(100% - 24px)';
-                highlight.style.left = '12px';
-                highlight.style.height = `${target.offsetHeight}px`;
-                highlight.style.top = `${target.offsetTop}px`;
-            }
-        }
-
-        document.querySelectorAll('.nav-category').forEach(category => {
-            category.addEventListener('click', function() {
-                document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-                updateHighlight(this);
-                
-                document.querySelectorAll('.nav-items').forEach(item => {
-                    item.classList.remove('active');
-                    if(item.dataset.category === this.dataset.category) item.classList.add('active');
-                });
-
-                if (window.matchMedia("(max-width: 768px)").matches) {
-                    this.parentElement.scrollTo({
-                        left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        window.addEventListener('resize', () => {
-            const active = document.querySelector('.nav-category.active');
-            if (active) {
-                document.querySelector('.nav-highlight').style.transition = 'none';
-                updateHighlight(active);
-                setTimeout(() => {
-                    document.querySelector('.nav-highlight').style.transition = '';
-                }, 10);
-            }
-        });
-
-        updateHighlight(document.querySelector('.nav-category.active'));
-    </script>
-</body>
-</html>
+    .nav-icon {
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+    }
+}
