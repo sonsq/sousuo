@@ -15,8 +15,8 @@ body {
     -webkit-user-select: none;
     -webkit-user-drag: none;
     background: no-repeat fixed;
-    background-size: cover;
     background-position: center;
+    background-size: cover;
     transition: background-image 0.5s ease;
 }
 
