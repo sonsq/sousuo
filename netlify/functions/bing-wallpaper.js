@@ -12,7 +12,7 @@ exports.handler = async (event, context) => {
     
     // 请求带缓存的必应API（idx=0表示今日壁纸）
     const apiRes = await axios.get(
-      `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ts=${dateStamp}&mtk=zh-CN`,
+      `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ts=${dateStamp}&mkt=zh-CN`,
       { headers: { 'User-Agent': 'Mozilla/5.0' } }
     );
 
