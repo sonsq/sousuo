@@ -14,7 +14,6 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* 搜索框容器 */
         .search-container {
             display: flex;
             max-width: 800px;
@@ -25,7 +24,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
-        /* 搜索引擎选择 */
         .engine-select {
             position: relative;
             width: 120px;
@@ -78,7 +76,6 @@
             background: rgba(0, 0, 0, 0.05);
         }
 
-        /* 搜索输入框 */
         .search-input {
             flex: 1;
             padding: 15px;
@@ -88,7 +85,6 @@
             color: #333;
         }
 
-        /* 搜索按钮 */
         .search-btn {
             width: 80px;
             padding: 15px 0;
@@ -107,7 +103,6 @@
             background: rgba(255, 255, 255, 0.9);
         }
 
-        /* 导航容器 */
         .nav-wrapper {
             max-width: 800px;
             width: 90%;
@@ -116,7 +111,6 @@
             gap: 20px;
         }
 
-        /* 分类导航栏 */
         .nav-categories {
             position: relative;
             background: rgba(255, 255, 255, 0.1);
@@ -131,8 +125,8 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: calc(100% - 30px); /* 修复桌面端宽度问题 */
-            left: 15px; /* 对齐内边距 */
+            width: calc(100% - 30px);
+            left: 15px;
         }
 
         .nav-category {
@@ -149,7 +143,6 @@
             color: #4a90e2;
         }
 
-        /* 导航内容区 */
         .nav-content {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
@@ -192,7 +185,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 移动端适配 */
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -207,7 +199,6 @@
                 flex-direction: column;
             }
             
-            /* 修正移动端导航栏宽度 */
             .nav-categories {
                 display: flex;
                 flex-direction: row;
@@ -215,9 +206,11 @@
                 white-space: nowrap;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
-                padding: 10px 15px;
-                width: calc(100% - 30px); /* 对齐内容区宽度 */
+                padding: 12px 15px;
+                width: auto;
+                max-width: 100%;
                 margin: 0 auto 15px;
+                scroll-behavior: smooth;
             }
 
             .nav-categories::-webkit-scrollbar {
@@ -225,20 +218,19 @@
             }
 
             .nav-category {
-                flex-shrink: 0;
-                margin: 0 8px 0 0;
-                padding: 10px 15px;
-                font-size: 15px;
+                flex: 0 0 auto;
+                margin: 0 15px 0 0 !important;
+                padding: 12px 20px !important;
+                font-size: 16px !important;
                 margin-bottom: 0;
             }
 
-            /* 调整移动端高亮样式 */
             .nav-highlight {
                 height: 70% !important;
-                width: auto !important;
                 top: 50% !important;
-                left: 15px !important;
                 transform: translateY(-50%) !important;
+                z-index: 1;
+                display: block !important;
             }
             
             .nav-icon {
@@ -249,7 +241,6 @@
     </style>
 </head>
 <body>
-    <!-- 搜索框 -->
     <div class="search-container">
         <div class="engine-select">
             <button class="engine-btn"><i class="fab fa-windows"></i></button>
@@ -284,13 +275,15 @@
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- 导航模块 -->
     <div class="nav-wrapper">
         <div class="nav-categories">
             <div class="nav-highlight"></div>
             <div class="nav-category active" data-category="video">视频</div>
             <div class="nav-category" data-category="code">编程</div>
             <div class="nav-category" data-category="social">社交</div>
+            <div class="nav-category" data-category="news">新闻</div>
+            <div class="nav-category" data-category="music">音乐</div>
+            <div class="nav-category" data-category="shopping">购物</div>
         </div>
         
         <div class="nav-content">
@@ -324,11 +317,11 @@
                     <div class="nav-text">Twitter</div>
                 </a>
             </div>
+            <!-- 其他分类内容 -->
         </div>
     </div>
 
     <script>
-        // 搜索引擎配置
         const engines = {
             bing: { icon: 'fab fa-windows', url: 'https://www.bing.com/search?q=' },
             google: { icon: 'fab fa-google', url: 'https://www.google.com/search?q=' },
@@ -375,23 +368,28 @@
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
 
-        // 导航滑动高亮功能
+        // 导航高亮功能
         function updateHighlight(target) {
             const highlight = document.querySelector('.nav-highlight');
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
             if (isMobile) {
-                const left = target.offsetLeft - target.parentElement.offsetLeft;
-                const width = target.offsetWidth;
-                highlight.style.width = `${width}px`;
-                highlight.style.left = `${left}px`;
+                const container = target.parentElement;
+                const containerRect = container.getBoundingClientRect();
+                const targetRect = target.getBoundingClientRect();
+                const scrollLeft = container.scrollLeft;
+                
+                const relativeLeft = targetRect.left - containerRect.left + scrollLeft;
+                highlight.style.width = `${target.offsetWidth}px`;
+                highlight.style.left = `${relativeLeft}px`;
+                highlight.style.top = '50%';
+                highlight.style.transform = 'translateY(-50%)';
             } else {
-                highlight.style.width = '';
-                highlight.style.left = '';
-                const top = target.offsetTop;
-                const height = target.offsetHeight;
-                highlight.style.height = `${height}px`;
-                highlight.style.top = `${top}px`;
+                highlight.style.width = 'calc(100% - 30px)';
+                highlight.style.left = '15px';
+                highlight.style.height = `${target.offsetHeight}px`;
+                highlight.style.top = `${target.offsetTop}px`;
+                highlight.style.transform = 'none';
             }
         }
 
@@ -410,10 +408,22 @@
                         item.classList.add('active');
                     }
                 });
+
+                // 移动端自动滚动
+                if (window.matchMedia("(max-width: 768px)").matches) {
+                    const container = this.parentElement;
+                    const containerWidth = container.offsetWidth;
+                    const targetLeft = this.offsetLeft - (containerWidth/2 - this.offsetWidth/2);
+                    
+                    container.scrollTo({
+                        left: targetLeft,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
-        // 窗口大小变化时更新布局
+        // 窗口大小变化处理
         window.addEventListener('resize', () => {
             const active = document.querySelector('.nav-category.active');
             if (active) {
@@ -425,7 +435,7 @@
             }
         });
 
-        // 初始化高亮位置
+        // 初始化
         updateHighlight(document.querySelector('.nav-category.active'));
     </script>
 </body>
