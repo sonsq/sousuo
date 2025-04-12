@@ -6,7 +6,7 @@ exports.handler = async (event, context) => {
     const { size = 'desktop' } = event.queryStringParameters || {};
 
     // 请求必应壁纸 API
-    const apiUrl = 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1';
+    const apiUrl = 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN';
     const apiRes = await axios.get(apiUrl);
     const imagePath = apiRes.data.images[0].url;
     let imageUrl = `https://www.bing.com${imagePath}`;
