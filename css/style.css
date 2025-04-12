@@ -230,12 +230,12 @@ body {
 @media (max-width: 768px) {
     .time{
         margin-top: 25px;
-        height: 80px;
+        height: 60px;
         font-size: 55px;
     }
     
     .date{
-        height: 40px;
+        height: 30px;
         font-size: 18px;
     }
 
