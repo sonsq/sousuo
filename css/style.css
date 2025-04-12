@@ -227,13 +227,10 @@ body {
 }
 
 @media (max-width: 768px) {
-    .time{
-        height: 80px;
+    #time {
         font-size: 60px;
     }
-    
-    .date{
-        height: 40px;
+    #date {
         font-size: 18px;
     }
 
