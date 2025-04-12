@@ -33,7 +33,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         'Content-Type': imageRes.headers['content-type'],
-        'Cache-Control': 'public, max-age=866400', // 缓存一天
+        'Cache-Control': 'public, max-age=600', // 短缓存（10分钟）
         'Access-Control-Allow-Origin': '*'
       },
       body: Buffer.from(imageRes.data).toString('base64'),
