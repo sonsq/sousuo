@@ -16,22 +16,21 @@ body {
 }
 
 /* 时钟 */
-.clock-container{
-    text-align: center;
-    color: rgba(255, 255, 255, 1);
-    text-shadow: 0px 0px 8px rgba(35, 35, 35, 1);
-    font-family: 'Segoe UI', system-ui, sans-serif;
-}
-
-.time{
+.clock-container {
     margin-top: 32px;
-    height: 100px;
-    font-size: 80px;
+    text-align: center;
+    text-shadow: 0px 0px 3px rgba(35, 35, 35, 1);
 }
 
-.date{
-    height: 50px;
+#time {
+    font-size: 80px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#date {
     font-size: 22px;
+    margin-bottom: 16px;
+    color: rgba(255, 255, 255, 1);
 }
 
 /* 搜索 */
