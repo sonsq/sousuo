@@ -66,6 +66,7 @@ function updateHighlight(target) {
         highlight.style.left = '12px';
         highlight.style.height = `${target.offsetHeight}px`;
         highlight.style.top = `${target.offsetTop}px`;
+        highlight.style.transform = 'none';
     }
 }
 
