@@ -229,7 +229,7 @@ body {
 
 @media (max-width: 768px) {
     .time{
-        margin-top: 35px;
+        margin-top: 25px;
         height: 80px;
         font-size: 55px;
     }
