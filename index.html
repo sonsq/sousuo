@@ -10,35 +10,38 @@
             background: linear-gradient(45deg, #667eea, #764ba2);
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 12px;
             font-family: 'Segoe UI', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* 搜索容器优化 */
         .search-container {
             display: flex;
             max-width: 800px;
-            width: 90%;
-            margin: 0 auto 30px;
+            width: 94%;
+            margin: 0 auto 15px;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            height: 46px;
+            align-items: center;
         }
 
         .engine-select {
             position: relative;
-            width: 120px;
-            border-radius: 30px 0 0 30px;
-            z-index: 200;
+            width: 60px;
+            border-radius: 20px 0 0 20px;
+            flex-shrink: 0;
+            height: 100%;
         }
 
         .engine-btn {
             width: 100%;
             height: 100%;
-            padding: 15px;
+            padding: 0;
             border: none;
             background: none;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -50,12 +53,12 @@
             position: absolute;
             top: calc(100% + 5px);
             left: 0;
-            width: 200px;
+            width: 180px;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             display: none;
-            padding: 10px;
+            padding: 8px;
             z-index: 300;
         }
 
@@ -64,13 +67,14 @@
         }
 
         .engine-option {
-            padding: 12px;
+            padding: 10px;
             cursor: pointer;
             border-radius: 8px;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 14px;
             color: #333;
         }
 
@@ -80,75 +84,68 @@
 
         .search-input {
             flex: 1;
-            padding: 15px;
+            padding: 0 10px;
             border: none;
-            font-size: 16px;
+            font-size: 15px;
             background: transparent;
             color: #333;
             outline: none;
             -webkit-appearance: none;
-            transform: translateZ(0);
-            min-height: 48px;
-        }
-
-        .search-input:focus {
-            box-shadow: none;
-            border: none;
+            height: 100%;
+            line-height: 46px;
         }
 
         .search-btn {
-            width: 80px;
-            padding: 15px 0;
+            width: 50px;
+            height: 100%;
+            padding: 0;
             border: none;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 0 30px 30px 0;
+            border-radius: 0 20px 20px 0;
             cursor: pointer;
             color: #333;
-            transition: all 0.2s;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .search-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
         .nav-wrapper {
             max-width: 800px;
-            width: 90%;
+            width: 94%;
             margin: 0 auto;
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
 
         .nav-categories {
             position: relative;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 15px;
-            width: 180px;
+            border-radius: 16px;
+            padding: 12px;
+            width: 160px;
             box-sizing: border-box;
         }
 
         .nav-highlight {
             position: absolute;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            border-radius: 10px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: calc(100% - 30px);
-            left: 15px;
+            width: calc(100% - 24px);
+            left: 12px;
         }
 
         .nav-category {
             position: relative;
-            padding: 12px;
+            padding: 10px;
             cursor: pointer;
             color: white;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             z-index: 2;
             transition: color 0.3s;
+            font-size: 14px;
         }
 
         .nav-category.active {
@@ -157,15 +154,15 @@
 
         .nav-content {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 15px;
             flex: 1;
         }
 
         .nav-items {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 15px;
             animation: fadeIn 0.3s;
         }
 
@@ -177,88 +174,72 @@
             text-align: center;
             color: white;
             text-decoration: none;
+            font-size: 13px;
         }
 
         .nav-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            margin: 0 auto 8px;
+            border-radius: 10px;
+            margin: 0 auto 6px;
             transition: all 0.2s;
         }
 
         .nav-item:hover .nav-icon {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-            
-            .search-container,
-            .nav-wrapper {
+            .search-container {
                 width: 100%;
+                height: 44px;
+                border-radius: 18px;
             }
-            
+
+            .engine-select {
+                width: 54px;
+            }
+
+            .search-input {
+                font-size: 14px !important;
+                line-height: 44px;
+            }
+
             .nav-wrapper {
                 flex-direction: column;
+                width: 100%;
             }
-            
+
             .nav-categories {
                 display: flex;
                 flex-direction: row;
                 overflow-x: auto;
                 white-space: nowrap;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-                padding: 12px 15px;
+                padding: 10px 12px;
                 width: auto;
-                max-width: 100%;
-                margin: 0 auto 15px;
-                scroll-behavior: smooth;
-            }
-
-            .nav-categories::-webkit-scrollbar {
-                display: none;
+                border-radius: 14px;
             }
 
             .nav-category {
-                flex: 0 0 auto;
-                margin: 0 15px 0 0 !important;
-                padding: 12px 20px !important;
-                font-size: 16px !important;
-                margin-bottom: 0;
+                padding: 8px 16px !important;
+                margin: 0 12px 0 0 !important;
             }
 
             .nav-highlight {
-                height: 70% !important;
+                height: 60% !important;
                 top: 50% !important;
                 transform: translateY(-50%) !important;
-                z-index: 1;
-                display: block !important;
-            }
-            
-            .nav-icon {
-                width: 50px;
-                height: 50px;
             }
 
-            /* 移动端输入框优化 */
-            .search-input {
-                font-size: 16px !important;
-                min-height: 48px;
-                -webkit-user-select: text;
-            }
-            
-            .engine-btn {
-                padding: 12px;
+            .nav-icon {
+                width: 46px;
+                height: 46px;
             }
         }
     </style>
@@ -340,7 +321,6 @@
                     <div class="nav-text">Twitter</div>
                 </a>
             </div>
-            <!-- 其他分类内容 -->
         </div>
     </div>
 
@@ -349,9 +329,7 @@
         let lastTouch = 0;
         document.addEventListener('touchstart', function(e) {
             const now = Date.now();
-            if (now - lastTouch <= 300) {
-                e.preventDefault();
-            }
+            if (now - lastTouch <= 300) e.preventDefault();
             lastTouch = now;
         }, { passive: false });
 
@@ -366,31 +344,26 @@
 
         let currentEngine = 'bing';
 
-        // 引擎选择功能
         document.querySelectorAll('.engine-option').forEach(option => {
             option.addEventListener('click', () => {
-                const engine = option.dataset.engine;
-                currentEngine = engine;
+                currentEngine = option.dataset.engine;
                 document.querySelector('.engine-btn').innerHTML = 
-                    `<i class="${engines[engine].icon}"></i>`;
+                    `<i class="${engines[currentEngine].icon}"></i>`;
                 document.querySelector('.engine-list').classList.remove('show');
             });
         });
 
-        // 显示/隐藏引擎列表
         document.querySelector('.engine-btn').addEventListener('click', (e) => {
             e.stopPropagation();
             document.querySelector('.engine-list').classList.toggle('show');
         });
 
-        // 点击空白处关闭
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.engine-select')) {
                 document.querySelector('.engine-list').classList.remove('show');
             }
         });
 
-        // 搜索功能
         document.querySelector('.search-btn').addEventListener('click', search);
         document.querySelector('.search-input').addEventListener('keypress', e => {
             if (e.key === 'Enter') search();
@@ -401,62 +374,47 @@
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
 
-        // 导航高亮功能
         function updateHighlight(target) {
             const highlight = document.querySelector('.nav-highlight');
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
             if (isMobile) {
                 const container = target.parentElement;
-                const containerRect = container.getBoundingClientRect();
-                const targetRect = target.getBoundingClientRect();
                 const scrollLeft = container.scrollLeft;
+                const relativeLeft = target.offsetLeft - (container.offsetWidth/2 - target.offsetWidth/2);
                 
-                const relativeLeft = targetRect.left - containerRect.left + scrollLeft;
                 highlight.style.width = `${target.offsetWidth}px`;
-                highlight.style.left = `${relativeLeft}px`;
+                highlight.style.left = `${target.offsetLeft}px`;
                 highlight.style.top = '50%';
                 highlight.style.transform = 'translateY(-50%)';
             } else {
-                highlight.style.width = 'calc(100% - 30px)';
-                highlight.style.left = '15px';
+                highlight.style.width = 'calc(100% - 24px)';
+                highlight.style.left = '12px';
                 highlight.style.height = `${target.offsetHeight}px`;
                 highlight.style.top = `${target.offsetTop}px`;
-                highlight.style.transform = 'none';
             }
         }
 
-        // 导航分类点击事件
         document.querySelectorAll('.nav-category').forEach(category => {
             category.addEventListener('click', function() {
                 document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
                 this.classList.add('active');
-                
                 updateHighlight(this);
                 
-                const targetCategory = this.dataset.category;
                 document.querySelectorAll('.nav-items').forEach(item => {
                     item.classList.remove('active');
-                    if(item.dataset.category === targetCategory) {
-                        item.classList.add('active');
-                    }
+                    if(item.dataset.category === this.dataset.category) item.classList.add('active');
                 });
 
-                // 移动端自动滚动
                 if (window.matchMedia("(max-width: 768px)").matches) {
-                    const container = this.parentElement;
-                    const containerWidth = container.offsetWidth;
-                    const targetLeft = this.offsetLeft - (containerWidth/2 - this.offsetWidth/2);
-                    
-                    container.scrollTo({
-                        left: targetLeft,
+                    this.parentElement.scrollTo({
+                        left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
                         behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // 窗口大小变化处理
         window.addEventListener('resize', () => {
             const active = document.querySelector('.nav-category.active');
             if (active) {
@@ -468,7 +426,6 @@
             }
         });
 
-        // 初始化
         updateHighlight(document.querySelector('.nav-category.active'));
     </script>
 </body>
