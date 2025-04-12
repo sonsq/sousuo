@@ -39,7 +39,7 @@ body {
     display: flex;
     max-width: 600px;
     width: 94%;
-    margin: 0 auto 55px; 
+    margin: 0 auto 35px; 
     background: rgba(255, 255, 255, 0.7);
     border-radius: 20px;
     box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
@@ -148,7 +148,7 @@ body {
 .nav-categories {
     position: relative;
     border-radius: 16px;
-    padding: 12px;
+    padding: 15px;
     width: 120px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.4);
@@ -229,9 +229,8 @@ body {
 
 @media (max-width: 768px) {
     .time{
-        margin-top: 25px;
         height: 80px;
-        font-size: 45px;
+        font-size: 60px;
     }
     
     .date{
