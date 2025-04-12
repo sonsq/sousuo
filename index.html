@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>极简搜索导航</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -10,55 +10,52 @@
             background: linear-gradient(45deg, #667eea, #764ba2);
             min-height: 100vh;
             margin: 0;
-            padding: 12px;
+            padding: 20px;
             font-family: 'Segoe UI', sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        /* 搜索容器优化 */
+        /* 搜索框容器 */
         .search-container {
             display: flex;
             max-width: 800px;
-            width: 94%;
-            margin: 0 auto 15px;
+            width: 90%;
+            margin: 0 auto 30px;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            height: 46px;
-            align-items: center;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
+        /* 搜索引擎选择 */
         .engine-select {
             position: relative;
-            width: 60px;
-            border-radius: 20px 0 0 20px;
-            flex-shrink: 0;
-            height: 100%;
+            width: 120px;
+            border-radius: 30px 0 0 30px;
+            z-index: 200;
         }
 
         .engine-btn {
             width: 100%;
             height: 100%;
-            padding: 0;
+            padding: 15px;
             border: none;
             background: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #333;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .engine-list {
             position: absolute;
             top: calc(100% + 5px);
             left: 0;
-            width: 180px;
+            width: 200px;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             display: none;
-            padding: 8px;
+            padding: 10px;
             z-index: 300;
         }
 
@@ -67,14 +64,13 @@
         }
 
         .engine-option {
-            padding: 10px;
+            padding: 12px;
             cursor: pointer;
             border-radius: 8px;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
+            gap: 10px;
             color: #333;
         }
 
@@ -82,87 +78,89 @@
             background: rgba(0, 0, 0, 0.05);
         }
 
+        /* 搜索输入框 */
         .search-input {
             flex: 1;
-            padding: 0 10px;
+            padding: 15px;
             border: none;
-            font-size: 15px;
+            font-size: 16px;
             background: transparent;
             color: #333;
-            outline: none;
-            -webkit-appearance: none;
-            height: 100%;
-            line-height: 46px;
         }
 
+        /* 搜索按钮 */
         .search-btn {
-            width: 50px;
-            height: 100%;
-            padding: 0;
+            width: 80px;
+            padding: 15px 0;
             border: none;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 0 20px 20px 0;
+            border-radius: 0 30px 30px 0;
             cursor: pointer;
             color: #333;
-            flex-shrink: 0;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            -webkit-tap-highlight-color: transparent;
         }
 
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 导航容器 */
         .nav-wrapper {
             max-width: 800px;
-            width: 94%;
+            width: 90%;
             margin: 0 auto;
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
+        /* 分类导航栏 */
         .nav-categories {
             position: relative;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 12px;
-            width: 160px;
+            border-radius: 20px;
+            padding: 15px;
+            width: 180px;
             box-sizing: border-box;
         }
 
         .nav-highlight {
             position: absolute;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: calc(100% - 24px);
-            left: 12px;
+            width: calc(100% - 30px); /* 修复桌面端宽度问题 */
+            left: 15px; /* 对齐内边距 */
         }
 
         .nav-category {
             position: relative;
-            padding: 10px;
+            padding: 12px;
             cursor: pointer;
             color: white;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             z-index: 2;
             transition: color 0.3s;
-            font-size: 14px;
         }
 
         .nav-category.active {
             color: #4a90e2;
         }
 
+        /* 导航内容区 */
         .nav-content {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 15px;
+            border-radius: 20px;
+            padding: 20px;
             flex: 1;
         }
 
         .nav-items {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 20px;
             animation: fadeIn 0.3s;
         }
 
@@ -174,77 +172,84 @@
             text-align: center;
             color: white;
             text-decoration: none;
-            font-size: 13px;
         }
 
         .nav-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            margin: 0 auto 6px;
+            border-radius: 12px;
+            margin: 0 auto 8px;
             transition: all 0.2s;
         }
 
         .nav-item:hover .nav-icon {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 移动端适配 */
         @media (max-width: 768px) {
-            .search-container {
+            body {
+                padding: 15px;
+            }
+            
+            .search-container,
+            .nav-wrapper {
                 width: 100%;
-                height: 44px;
-                border-radius: 18px;
             }
-
-            .engine-select {
-                width: 54px;
-            }
-
-            .search-input {
-                font-size: 14px !important;
-                line-height: 44px;
-            }
-
+            
             .nav-wrapper {
                 flex-direction: column;
-                width: 100%;
             }
-
+            
+            /* 修正移动端导航栏宽度 */
             .nav-categories {
                 display: flex;
                 flex-direction: row;
                 overflow-x: auto;
                 white-space: nowrap;
-                padding: 10px 12px;
-                width: auto;
-                border-radius: 14px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding: 10px 15px;
+                width: calc(100% - 30px); /* 对齐内容区宽度 */
+                margin: 0 auto 15px;
+            }
+
+            .nav-categories::-webkit-scrollbar {
+                display: none;
             }
 
             .nav-category {
-                padding: 8px 16px !important;
-                margin: 0 12px 0 0 !important;
+                flex-shrink: 0;
+                margin: 0 8px 0 0;
+                padding: 10px 15px;
+                font-size: 15px;
+                margin-bottom: 0;
             }
 
+            /* 调整移动端高亮样式 */
             .nav-highlight {
-                height: 60% !important;
+                height: 70% !important;
+                width: auto !important;
                 top: 50% !important;
+                left: 15px !important;
                 transform: translateY(-50%) !important;
             }
-
+            
             .nav-icon {
-                width: 46px;
-                height: 46px;
+                width: 50px;
+                height: 50px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 搜索框 -->
     <div class="search-container">
         <div class="engine-select">
             <button class="engine-btn"><i class="fab fa-windows"></i></button>
@@ -279,15 +284,13 @@
         <button class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 
+    <!-- 导航模块 -->
     <div class="nav-wrapper">
         <div class="nav-categories">
             <div class="nav-highlight"></div>
             <div class="nav-category active" data-category="video">视频</div>
             <div class="nav-category" data-category="code">编程</div>
             <div class="nav-category" data-category="social">社交</div>
-            <div class="nav-category" data-category="news">新闻</div>
-            <div class="nav-category" data-category="music">音乐</div>
-            <div class="nav-category" data-category="shopping">购物</div>
         </div>
         
         <div class="nav-content">
@@ -325,14 +328,7 @@
     </div>
 
     <script>
-        // 双击缩放限制
-        let lastTouch = 0;
-        document.addEventListener('touchstart', function(e) {
-            const now = Date.now();
-            if (now - lastTouch <= 300) e.preventDefault();
-            lastTouch = now;
-        }, { passive: false });
-
+        // 搜索引擎配置
         const engines = {
             bing: { icon: 'fab fa-windows', url: 'https://www.bing.com/search?q=' },
             google: { icon: 'fab fa-google', url: 'https://www.google.com/search?q=' },
@@ -344,26 +340,31 @@
 
         let currentEngine = 'bing';
 
+        // 引擎选择功能
         document.querySelectorAll('.engine-option').forEach(option => {
             option.addEventListener('click', () => {
-                currentEngine = option.dataset.engine;
+                const engine = option.dataset.engine;
+                currentEngine = engine;
                 document.querySelector('.engine-btn').innerHTML = 
-                    `<i class="${engines[currentEngine].icon}"></i>`;
+                    `<i class="${engines[engine].icon}"></i>`;
                 document.querySelector('.engine-list').classList.remove('show');
             });
         });
 
+        // 显示/隐藏引擎列表
         document.querySelector('.engine-btn').addEventListener('click', (e) => {
             e.stopPropagation();
             document.querySelector('.engine-list').classList.toggle('show');
         });
 
+        // 点击空白处关闭
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.engine-select')) {
                 document.querySelector('.engine-list').classList.remove('show');
             }
         });
 
+        // 搜索功能
         document.querySelector('.search-btn').addEventListener('click', search);
         document.querySelector('.search-input').addEventListener('keypress', e => {
             if (e.key === 'Enter') search();
@@ -374,47 +375,45 @@
             window.open(engines[currentEngine].url + encodeURIComponent(query));
         }
 
+        // 导航滑动高亮功能
         function updateHighlight(target) {
             const highlight = document.querySelector('.nav-highlight');
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
             if (isMobile) {
-                const container = target.parentElement;
-                const scrollLeft = container.scrollLeft;
-                const relativeLeft = target.offsetLeft - (container.offsetWidth/2 - target.offsetWidth/2);
-                
-                highlight.style.width = `${target.offsetWidth}px`;
-                highlight.style.left = `${target.offsetLeft}px`;
-                highlight.style.top = '50%';
-                highlight.style.transform = 'translateY(-50%)';
+                const left = target.offsetLeft - target.parentElement.offsetLeft;
+                const width = target.offsetWidth;
+                highlight.style.width = `${width}px`;
+                highlight.style.left = `${left}px`;
             } else {
-                highlight.style.width = 'calc(100% - 24px)';
-                highlight.style.left = '12px';
-                highlight.style.height = `${target.offsetHeight}px`;
-                highlight.style.top = `${target.offsetTop}px`;
+                highlight.style.width = '';
+                highlight.style.left = '';
+                const top = target.offsetTop;
+                const height = target.offsetHeight;
+                highlight.style.height = `${height}px`;
+                highlight.style.top = `${top}px`;
             }
         }
 
+        // 导航分类点击事件
         document.querySelectorAll('.nav-category').forEach(category => {
             category.addEventListener('click', function() {
                 document.querySelectorAll('.nav-category').forEach(c => c.classList.remove('active'));
                 this.classList.add('active');
+                
                 updateHighlight(this);
                 
+                const targetCategory = this.dataset.category;
                 document.querySelectorAll('.nav-items').forEach(item => {
                     item.classList.remove('active');
-                    if(item.dataset.category === this.dataset.category) item.classList.add('active');
+                    if(item.dataset.category === targetCategory) {
+                        item.classList.add('active');
+                    }
                 });
-
-                if (window.matchMedia("(max-width: 768px)").matches) {
-                    this.parentElement.scrollTo({
-                        left: this.offsetLeft - (this.parentElement.offsetWidth/2 - this.offsetWidth/2),
-                        behavior: 'smooth'
-                    });
-                }
             });
         });
 
+        // 窗口大小变化时更新布局
         window.addEventListener('resize', () => {
             const active = document.querySelector('.nav-category.active');
             if (active) {
@@ -426,6 +425,7 @@
             }
         });
 
+        // 初始化高亮位置
         updateHighlight(document.querySelector('.nav-category.active'));
     </script>
 </body>
