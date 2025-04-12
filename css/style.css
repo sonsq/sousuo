@@ -39,7 +39,7 @@ body {
     display: flex;
     max-width: 600px;
     width: 94%;
-    margin: 0 auto 45px; 
+    margin: 0 auto 15px; 
     background: rgba(255, 255, 255, 0.7);
     border-radius: 20px;
     box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.4);
