@@ -111,7 +111,6 @@ body {
     font-size: 15px;
     background: transparent;
     outline: none;
-    -webkit-appearance: none;
     height: 100%;
     line-height: 46px;
 }
