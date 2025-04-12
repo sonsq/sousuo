@@ -11,6 +11,10 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     -webkit-tap-highlight-color: transparent;
     background-color: rgba(0, 0, 0, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    background: no-repeat fixed;
     background-size: cover;
     background-position: center;
     transition: background-image 0.5s ease;
